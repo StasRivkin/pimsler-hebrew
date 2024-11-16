@@ -1,16 +1,16 @@
-import { NgModule, isDevMode } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {NgModule, isDevMode} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { ServiceWorkerModule } from '@angular/service-worker';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
+import {ServiceWorkerModule} from '@angular/service-worker';
+import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatButtonModule} from "@angular/material/button";
 import {MatTabsModule} from "@angular/material/tabs";
-import { TabsComponent } from './components/tabs/tabs.component';
-import { HeaderComponent } from './components/header/header.component';
-import { TabBodyComponent } from './components/tab-body/tab-body.component';
+import {TabsComponent} from './components/tabs/tabs.component';
+import {HeaderComponent} from './components/header/header.component';
+import {TabBodyComponent} from './components/tab-body/tab-body.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatListModule} from "@angular/material/list";
@@ -43,6 +43,11 @@ import {MatListModule} from "@angular/material/list";
   providers: [
     provideAnimationsAsync()
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports: [
+    TabsComponent,
+    HeaderComponent
+  ]
 })
-export class AppModule { }
+export class AppModule {
+}
