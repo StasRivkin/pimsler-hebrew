@@ -14,6 +14,8 @@ import { TabBodyComponent } from './components/tab-body/tab-body.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatListModule} from "@angular/material/list";
+import {MatProgressBarModule} from "@angular/material/progress-bar";
+import {MatIconModule} from "@angular/material/icon";
 
 @NgModule({
   declarations: [
@@ -33,6 +35,8 @@ import {MatListModule} from "@angular/material/list";
     BrowserAnimationsModule,
     MatPaginatorModule,
     MatListModule,
+    MatProgressBarModule,
+    MatIconModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
       // Register the ServiceWorker as soon as the application is stable
