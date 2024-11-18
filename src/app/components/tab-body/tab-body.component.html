@@ -1,0 +1,29 @@
+<div
+  style="height: 90%;display: flex;flex-direction: column;flex-wrap: nowrap;justify-content: flex-start;overflow-y: auto;">
+  <mat-list>
+    <mat-list-item *ngFor="let audio of paginatedAudios" style="display: contents;">
+      <div style="width: 100%;">
+        <h3>{{ audio.title }}</h3>
+        <audio #audioPlayer controls style="width: 100%;" (play)="onPlay(audioPlayer)" (pause)="onPause(audioPlayer)">
+          <source [src]="audio.url" type="audio/mp3">
+          Ваш браузер не поддерживает аудио.
+        </audio>
+      </div>
+    </mat-list-item>
+  </mat-list>
+
+  <div class="audio-controller" *ngIf="currentAudio" style="width: 15%">
+    <button mat-icon-button style="margin: auto;">
+      <mat-icon>{{ isPlaying ? 'pause_circle' : 'play_circle' }}</mat-icon>
+    </button>
+  </div>
+
+
+  <mat-paginator
+    [length]="audios.length"
+    [pageSize]="pageSize"
+    (page)="onPageChange($event)"
+    [pageSizeOptions]="[4,6,15,30]"
+    style="flex-shrink: 0;">
+  </mat-paginator>
+</div>

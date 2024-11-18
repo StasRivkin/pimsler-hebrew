@@ -1,0 +1,21 @@
+
+.main {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+mat-paginator {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+.audio-controller {
+  position: absolute;
+  bottom: 0;
+  z-index: 1;
+  padding: 10px;
+  flex-shrink: 0;
+}
