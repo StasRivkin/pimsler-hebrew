@@ -27,24 +27,24 @@ export class TabBodyComponent implements OnInit {
     });
     this.store.getCurAudio().subscribe(curAudio => {
       if (curAudio) {
-        this.currentAudio?.pause();
-        // this.stopAllAudios(curAudio);
+        this.stopAllAudios(curAudio);
         this.currentAudio = curAudio;
-        this.isPlaying = !curAudio.paused; // Синхронизируем isPlaying
+        this.isPlaying = !curAudio.paused;
         this.currentAudio.play();
+      }else{
+        this.currentAudio?.pause();
       }
     });
   }
 
   onPlay(currentAudio: HTMLAudioElement) {
     this.store.setCurAudio(currentAudio);
-    this.isPlaying = true; // Устанавливаем isPlaying в true
   }
 
   onPause(currentAudio: HTMLAudioElement) {
     if (currentAudio) {
       currentAudio.pause();
-      this.isPlaying = false; // Устанавливаем isPlaying в false
+      this.isPlaying = false;
     }
   }
 
@@ -88,15 +88,15 @@ export class TabBodyComponent implements OnInit {
     this.paginatedAudios = this.audios.slice(startIndex, endIndex);
   }
 
-  // private stopAllAudios(currentAudio: HTMLAudioElement): void {
-  //   const sourceElement = currentAudio.querySelector('source');
-  //   if (sourceElement) {
-  //     const allAudioPlayers = document.querySelectorAll('audio');
-  //     allAudioPlayers.forEach((audio: HTMLAudioElement) => {
-  //       if (audio !== currentAudio) {
-  //         audio.pause();
-  //       }
-  //     });
-  //   }
-  // }
+  private stopAllAudios(currentAudio: HTMLAudioElement): void {
+    const sourceElement = currentAudio.querySelector('source');
+    if (sourceElement) {
+      const allAudioPlayers = document.querySelectorAll('audio');
+      allAudioPlayers.forEach((audio: HTMLAudioElement) => {
+        if (audio !== currentAudio) {
+          audio.pause();
+        }
+      });
+    }
+  }
 }
