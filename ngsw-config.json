@@ -23,8 +23,9 @@
         "files": [
           "/assets/**",
           "/media/*.(svg|cur|jpg|jpeg|png|apng|webp|avif|gif|otf|ttf|woff|woff2)",
-          "/assets/**/*.mp3",
-          "/assets/**/*.wav"
+          "/assets/part1/**.mp3",
+          "/assets/part2/**.mp3",
+          "/assets/part3/**.mp3"
         ]
       }
     }
