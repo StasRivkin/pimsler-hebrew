@@ -1,39 +1,26 @@
 import {Component, OnInit} from '@angular/core';
 import {DataStoreService} from "../../store/data-store.service";
+import {AudioLoaderService} from "../../services/audio-loader.service";
 
 @Component({
   selector: 'app-tabs',
   templateUrl: './tabs.component.html',
-  styleUrl: './tabs.component.css'
+  styleUrls: ['./tabs.component.css']
 })
 export class TabsComponent implements OnInit {
 
   constructor(
-    private store: DataStoreService
+    private store: DataStoreService,
   ) {
   }
 
   ngOnInit(): void {
+    this.store.setCurPart(1);
   }
 
-  onTabChange(event: any) {
+  async onTabChange(event: any) {
     const selectedIndex = event.index;
-    this.updateAudios(selectedIndex);
+    this.store.setCurPart(selectedIndex + 1);
   }
 
-  updateAudios(tabIndex: number) {
-    switch (tabIndex) {
-      case 0:
-        this.store.setShowElement(tabIndex)
-        break;
-      case 1:
-        this.store.setShowElement(tabIndex)
-        break;
-      case 2:
-        this.store.setShowElement(tabIndex)
-        break;
-      default:
-        this.store.setShowElement(0)
-    }
-  }
 }

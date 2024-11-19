@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { SwUpdate } from '@angular/service-worker';
+import {Component} from '@angular/core';
+import {SwUpdate} from '@angular/service-worker';
+import {AudioLoaderService} from "./services/audio-loader.service";
 
 @Component({
   selector: 'app-root',

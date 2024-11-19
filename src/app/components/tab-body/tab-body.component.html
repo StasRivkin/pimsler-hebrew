@@ -4,7 +4,7 @@
     <mat-list-item *ngFor="let audio of paginatedAudios" style="display: contents;">
       <div style="width: 100%;">
         <h3>{{ audio.title }}</h3>
-        <audio #audioPlayer controls style="width: 100%;" (play)="onPlay(audio, audioPlayer)" (pause)="onPause(audioPlayer)">
+        <audio #audioPlayer controls style="width: 100%;" (play)="onPlay(audioPlayer)" (pause)="onPause(audioPlayer)">
           <source [src]="audio.url" type="audio/mp3">
           Ваш браузер не поддерживает аудио.
         </audio>
