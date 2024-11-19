@@ -52,3 +52,64 @@ mat-paginator {
   box-shadow: 0 0 10px rgba(200, 25, 185, 0.87); /* Тень для выделенной кнопки */
 }
 
+.progress-bar {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 39%;
+  border-radius: 5px;
+}
+
+/* Стили для track в WebKit-браузерах */
+.progress-bar::-webkit-slider-runnable-track {
+  background: #663ab6;  /* Цвет фона прогресс-бара */
+  height: 8px;
+  border-radius: 5px;
+}
+
+/* Стили для ползунка в WebKit-браузерах */
+.progress-bar::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: rgba(200, 25, 185, 0.87); /* Цвет ползунка */
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  margin-top: -4px;
+  border: 2px solid rgba(200, 25, 185, 0.87);/* Для выравнивания ползунка */
+}
+
+/* Стили для track в Firefox */
+.progress-bar::-moz-range-track {
+  background: #663ab6;  /* Цвет фона прогресс-бара */
+  height: 8px;
+  border-radius: 5px;
+}
+
+/* Стили для ползунка в Firefox */
+.progress-bar::-moz-range-thumb {
+  background-color: rgba(200, 25, 185, 0.87); /* Цвет ползунка */
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid rgba(200, 25, 185, 0.87);
+}
+
+/* Стили для track в IE */
+.progress-bar::-ms-track {
+  background: #663ab6;  /* Цвет фона прогресс-бара */
+  height: 8px;
+  border-radius: 5px;
+  border-color: transparent;
+  border-width: 8px 0;
+}
+
+/* Стили для ползунка в IE */
+.progress-bar::-ms-thumb {
+  background-color: rgba(200, 25, 185, 0.87); /* Цвет ползунка */
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid rgba(200, 25, 185, 0.87);
+}
+

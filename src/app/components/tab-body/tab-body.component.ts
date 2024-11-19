@@ -1,5 +1,6 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {DataStoreService} from '../../store/data-store.service';
+import {log} from "@angular-devkit/build-angular/src/builders/ssr-dev-server";
 
 @Component({
   selector: 'app-tab-body',
@@ -13,7 +14,13 @@ export class TabBodyComponent implements OnInit {
   paginatedAudios: any[] = [];
   currentAudioUrl?: string;
   currentPage = 0;
-  pageSize = 12;
+  pageSize = 13;
+
+
+  isPlaying = false;        // Состояние воспроизведения
+  isMuted = false;          // Состояние звука
+  currentTime = 0;          // Текущее время
+  audioDuration = 0;        // Длительность трека
 
   constructor(private store: DataStoreService) {
   }
@@ -23,6 +30,7 @@ export class TabBodyComponent implements OnInit {
       this.audios = this.generateAudios(curPart);
       this.updatePaginatedAudios();
       this.currentAudioUrl = undefined;
+      this.isMuted = false;
     });
   }
 
@@ -35,16 +43,24 @@ export class TabBodyComponent implements OnInit {
     if (player) {
       player.load();
       player.play();
+      player.muted = this.isMuted;
+      this.isPlaying = true;
+      player.onloadedmetadata = () => {
+        this.audioDuration = player.duration;
+      };
     }
-
   }
 
   onPlay(audioPlayer: HTMLAudioElement): void {
     audioPlayer.play();
+    audioPlayer.muted = this.isMuted;
+    this.isPlaying = true;
   }
 
   onPause(audioPlayer: HTMLAudioElement): void {
     audioPlayer.pause();
+    this.isPlaying = false;
+    this.isMuted = false;
   }
 
   onPageChange(event: any): void {
@@ -55,6 +71,8 @@ export class TabBodyComponent implements OnInit {
 
   onCloseAudio(): void {
     this.currentAudioUrl = undefined;
+    this.isPlaying = false;
+    this.isMuted = false;
   }
 
   private updatePaginatedAudios(): void {
@@ -71,4 +89,50 @@ export class TabBodyComponent implements OnInit {
       url: `${basePath}${i + 1}.mp3`
     }));
   }
+
+  togglePlayPause(): void {
+    const player = this.audioPlayer.nativeElement;
+    if (this.isPlaying) {
+      player.pause();
+    } else {
+      player.play();
+    }
+    this.isPlaying = !this.isPlaying;
+  }
+
+  toggleMute(): void {
+    const player = this.audioPlayer.nativeElement;
+    player.muted = !this.isMuted;
+    this.isMuted = !this.isMuted;
+  }
+
+  onTimeUpdate(player: HTMLAudioElement): void {
+    this.currentTime = player.currentTime;
+    this.audioDuration = player.duration;
+  }
+
+  onSeek(event: any): void {
+    const player = this.audioPlayer.nativeElement;
+    player.currentTime = event.target.value;
+  }
+
+  onEnded(player: HTMLAudioElement): void {
+    const currentIndex = this.audios.findIndex(audio => audio.url === this.currentAudioUrl);
+    if (currentIndex !== -1 && currentIndex < this.audios.length - 1) {
+      const nextAudio = this.audios[currentIndex + 1];
+      this.loadAudio(nextAudio.url);
+      this.isPlaying = true;
+      this.isMuted = false;
+    }else {
+      this.isPlaying = false;
+      this.isMuted = false;
+    }
+  }
+
+  formatTime(time: number): string {
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+  }
+
 }

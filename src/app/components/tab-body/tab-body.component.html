@@ -4,10 +4,10 @@
   <mat-list>
     <mat-list-item *ngFor="let audio of paginatedAudios" style="display: contents;">
       <button class="lessonButton"
-        mat-raised-button
-        (click)="loadAudio(audio.url)"
-        style="width: 100%; margin-bottom: 8px;"
-        [class.selected]="currentAudioUrl === audio.url">
+              mat-raised-button
+              (click)="loadAudio(audio.url)"
+              style="width: 100%; margin-bottom: 8px;"
+              [class.selected]="currentAudioUrl === audio.url">
         <span style="margin-left: 10px;">{{ audio.title }}</span>
       </button>
     </mat-list-item>
@@ -15,23 +15,50 @@
 
 
   <div class="audio-container" *ngIf="currentAudioUrl" style="margin-bottom: 1rem;">
-    <audio class="audio-controller" #audioPlayer controls autoplay style="width: 100%;" (play)="onPlay(audioPlayer)" (pause)="onPause(audioPlayer)">
-      <source [src]="currentAudioUrl" type="audio/mp3" />
+    <audio [style.display]="'none'" class="audio-controller" #audioPlayer controls autoplay style="width: 100%;"
+           (play)="onPlay(audioPlayer)" (pause)="onPause(audioPlayer)" (timeupdate)="onTimeUpdate(audioPlayer)"
+           (ended)="onEnded(audioPlayer)">
+      <source [src]="currentAudioUrl" type="audio/mp3"/>
       Ваш браузер не поддерживает аудио.
     </audio>
-    <button
-      mat-icon-button
-      class="close-button"
-      (click)="onCloseAudio()">
-      <mat-icon>close</mat-icon>
-    </button>
+
+    <div class="audio-controls" style="width: 90%; display: flex; flex-wrap: nowrap;justify-content: space-between">
+      <!-- Кнопка Play/Pause -->
+      <button mat-icon-button (click)="togglePlayPause()">
+        <mat-icon>{{ isPlaying ? 'pause' : 'play_arrow' }}</mat-icon>
+      </button>
+
+      <!-- Кнопка Mute/Unmute -->
+      <button mat-icon-button (click)="toggleMute()">
+        <mat-icon>{{ isMuted ? 'volume_off' : 'volume_up' }}</mat-icon>
+      </button>
+
+      <div class="time-display" style="display: flex;font-size: smaller; align-items: center">
+        <span>{{ formatTime(currentTime) }} / {{ formatTime(audioDuration) }}</span>
+      </div>
+
+      <!-- Прогресс-бар для отслеживания текущего трека -->
+      <input
+        type="range"
+        min="0"
+        [max]="audioDuration"
+        [value]="currentTime"
+        (input)="onSeek($event)"
+        class="progress-bar"
+      />
+
+      <!-- Кнопка закрытия плеера -->
+      <button mat-icon-button class="close-button" (click)="onCloseAudio()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
   </div>
 
   <mat-paginator
     [length]="audios.length"
     [pageSize]="pageSize"
     (page)="onPageChange($event)"
-    [pageSizeOptions]="[12,30]"
+    [pageSizeOptions]="[5,10,13,30]"
     style="flex-shrink: 0;">
   </mat-paginator>
 </div>
