@@ -16,6 +16,7 @@ import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatListModule} from "@angular/material/list";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {MatIconModule} from "@angular/material/icon";
+import {AudioLoaderService} from "./services/audio-loader.service";
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import {MatIconModule} from "@angular/material/icon";
     })
   ],
   providers: [
-    provideAnimationsAsync()
+    provideAnimationsAsync(),
+    AudioLoaderService
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent],
