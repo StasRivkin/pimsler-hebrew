@@ -46,8 +46,7 @@ import {AudioLoaderService} from "./services/audio-loader.service";
     })
   ],
   providers: [
-    provideAnimationsAsync(),
-    AudioLoaderService
+    provideAnimationsAsync()
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent],
