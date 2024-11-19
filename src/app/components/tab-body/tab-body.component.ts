@@ -26,9 +26,7 @@ export class TabBodyComponent implements OnInit {
 
   loadAudio(url: string): void {
     if (url===this.currentAudioUrl){
-      this.currentAudioUrl = undefined;
-      const player = this.audioPlayer?.nativeElement;
-      player?.pause()
+     return;
     }
     this.currentAudioUrl = url;
       const player = this.audioPlayer?.nativeElement;
