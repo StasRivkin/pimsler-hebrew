@@ -58,6 +58,9 @@ mat-paginator {
   appearance: none;
   width: 39%;
   border-radius: 5px;
+  background: transparent; /* Фон прозрачный */
+  border: none; /* Убираем границы */
+  box-shadow: none; /* Убираем тени, если есть */
 }
 
 /* Стили для track в WebKit-браузерах */
