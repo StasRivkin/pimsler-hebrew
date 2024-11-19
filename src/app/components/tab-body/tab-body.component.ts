@@ -1,5 +1,5 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { DataStoreService } from '../../store/data-store.service';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {DataStoreService} from '../../store/data-store.service';
 
 @Component({
   selector: 'app-tab-body',
@@ -7,7 +7,7 @@ import { DataStoreService } from '../../store/data-store.service';
   styleUrls: ['./tab-body.component.css']
 })
 export class TabBodyComponent implements OnInit {
-  @ViewChild('audioPlayer', { static: false }) audioPlayer!: ElementRef<HTMLAudioElement>;
+  @ViewChild('audioPlayer', {static: false}) audioPlayer!: ElementRef<HTMLAudioElement>;
 
   audios: any[] = [];
   paginatedAudios: any[] = [];
@@ -15,25 +15,27 @@ export class TabBodyComponent implements OnInit {
   currentPage = 0;
   pageSize = 12;
 
-  constructor(private store: DataStoreService) {}
+  constructor(private store: DataStoreService) {
+  }
 
   ngOnInit(): void {
     this.store.getCurPart().subscribe(curPart => {
       this.audios = this.generateAudios(curPart);
       this.updatePaginatedAudios();
+      this.currentAudioUrl = undefined;
     });
   }
 
   loadAudio(url: string): void {
-    if (url===this.currentAudioUrl){
-     return;
+    if (url === this.currentAudioUrl) {
+      return;
     }
     this.currentAudioUrl = url;
-      const player = this.audioPlayer?.nativeElement;
-      if (player) {
-        player.load();
-        player.play();
-      }
+    const player = this.audioPlayer?.nativeElement;
+    if (player) {
+      player.load();
+      player.play();
+    }
 
   }
 
@@ -64,7 +66,7 @@ export class TabBodyComponent implements OnInit {
   private generateAudios(part: number): any[] {
     if (part < 1 || part > 3) return [];
     const basePath = `/assets/part${part}/part${part}-lesson-`;
-    return Array.from({ length: 30 }, (_, i) => ({
+    return Array.from({length: 30}, (_, i) => ({
       title: `Урок ${i + 1}`,
       url: `${basePath}${i + 1}.mp3`
     }));

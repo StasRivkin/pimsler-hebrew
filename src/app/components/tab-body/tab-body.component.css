@@ -1,3 +1,4 @@
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
 
 .main {
   position: relative;
@@ -27,3 +28,55 @@ mat-paginator {
 .audio-controller {
   width: 70vw!important;
 }
+
+.lessonButton {
+  text-align: center;
+  border-radius: 4px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+}
+
+.lessonButton:hover {
+  background-color: #f1f1f1;
+}
+
+.lessonButton.selected {
+  background-color: #1976d2;
+  color: white;
+  font-weight: bold;
+  box-shadow: 0 0 10px rgba(25, 118, 210, 0.5);
+  border: 2px solid #1976d2;
+}
+
+.lessonButton .mat-button-wrapper {
+  margin-left: 10px;
+}
+
+
+/* Основной стиль для кнопки */
+.lessonButton {
+  background-color: #1976d2; /* Основной синий цвет */
+  color: white;
+  padding: 12px;
+  font-size: 16px;
+  text-align: center;
+  border-radius: 4px;
+  border: none;
+  width: 100%;
+  cursor: pointer;
+}
+
+.lessonButton:hover {
+  background-color: #1565c0; /* Цвет при наведении */
+}
+
+.lessonButton.selected {
+  background-color: #1976d2; /* Выделенный цвет */
+  color: white;
+  font-weight: bold;
+  box-shadow: 0 0 10px rgba(255, 87, 34, 0.5); /* Тень для выделенной кнопки */
+}
+
