@@ -7,9 +7,6 @@ import {BehaviorSubject, Observable} from "rxjs";
 export class DataStoreService {
   private curPart: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   private curAudio: BehaviorSubject<HTMLAudioElement | undefined> = new BehaviorSubject<HTMLAudioElement | undefined>(undefined);
-  private audiosPart1: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
-  private audiosPart2: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
-  private audiosPart3: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   private loading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
 
@@ -32,29 +29,6 @@ export class DataStoreService {
     return this.curAudio.asObservable();
   }
 
-  setAudiosPart1(data: any[]): void {
-    this.audiosPart1.next(this.sortAudio(data));
-  }
-
-  getAudiosPart1(): Observable<any[]> {
-    return this.audiosPart1.asObservable();
-  }
-
-  setAudiosPart2(data: any[]): void {
-    this.audiosPart1.next(this.sortAudio(data));
-  }
-
-  getAudiosPart2(): Observable<any[]> {
-    return this.audiosPart2.asObservable();
-  }
-
-  setAudiosPart3(data: any[]): void {
-    this.audiosPart1.next(this.sortAudio(data));
-  }
-
-  getAudiosPart3(): Observable<any[]> {
-    return this.audiosPart3.asObservable();
-  }
 
   setLoading(status: boolean): void {
     this.loading.next(status);

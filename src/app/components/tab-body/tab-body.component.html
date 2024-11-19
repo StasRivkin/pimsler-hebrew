@@ -1,22 +1,28 @@
 <div
   style="height: 90%;display: flex;flex-direction: column;flex-wrap: nowrap;justify-content: flex-start;overflow-y: auto;">
+
   <mat-list>
     <mat-list-item *ngFor="let audio of paginatedAudios" style="display: contents;">
-      <div style="width: 100%;">
-        <h3>{{ audio.title }}</h3>
-        <audio #audioPlayer controls style="width: 100%;" (play)="onPlay(audioPlayer)" (pause)="onPause(audioPlayer)">
-          <source [src]="audio.url" type="audio/mp3">
-          Ваш браузер не поддерживает аудио.
-        </audio>
-      </div>
+      <button mat-icon-button (click)="loadAudio(audio.url)" style="width: 100%;">
+<!--        <mat-icon>play_arrow</mat-icon>-->
+        <span style="margin-left: 10px;">{{ audio.title }}</span>
+      </button>
     </mat-list-item>
   </mat-list>
 
-<!--  <div class="audio-controller" *ngIf="currentAudio" style="width: 15%">-->
-<!--    <button mat-icon-button style="margin: auto;">-->
-<!--      <mat-icon>{{ isPlaying ? 'pause_circle' : 'play_circle' }}</mat-icon>-->
-<!--    </button>-->
-<!--  </div>-->
+
+  <div class="audio-container" *ngIf="currentAudioUrl" style="margin-bottom: 1rem;">
+    <audio class="audio-controller" #audioPlayer controls autoplay style="width: 100%;" (play)="onPlay(audioPlayer)" (pause)="onPause(audioPlayer)">
+      <source [src]="currentAudioUrl" type="audio/mp3" />
+      Ваш браузер не поддерживает аудио.
+    </audio>
+    <button
+      mat-icon-button
+      class="close-button"
+      (click)="onCloseAudio()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
 
   <mat-paginator
     [length]="audios.length"
@@ -26,3 +32,5 @@
     style="flex-shrink: 0;">
   </mat-paginator>
 </div>
+
+

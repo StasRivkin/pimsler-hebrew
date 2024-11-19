@@ -1,7 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {DataStoreService} from "../../store/data-store.service";
-import {AudioLoaderService} from "../../services/audio-loader.service";
-import {log} from "@angular-devkit/build-angular/src/builders/ssr-dev-server";
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { DataStoreService } from '../../store/data-store.service';
 
 @Component({
   selector: 'app-tab-body',
@@ -9,39 +7,44 @@ import {log} from "@angular-devkit/build-angular/src/builders/ssr-dev-server";
   styleUrls: ['./tab-body.component.css']
 })
 export class TabBodyComponent implements OnInit {
-  private audios1: any[] = [];
-  private audios2: any[] = [];
-  private audios3: any[] = [];
-  private curTab: number = 0;
+  @ViewChild('audioPlayer', { static: false }) audioPlayer!: ElementRef<HTMLAudioElement>;
 
   audios: any[] = [];
   paginatedAudios: any[] = [];
+  currentAudioUrl?: string;
   currentPage = 0;
-  pageSize = 6;
+  pageSize = 12;
 
-  currentAudio: HTMLAudioElement | undefined;
-  isPlaying = false;
+  constructor(private store: DataStoreService) {}
 
-  constructor(private store: DataStoreService, private audioLoaderService: AudioLoaderService) {
-  }
-
-  async ngOnInit(): Promise<void> {
-    this.store.getCurPart().subscribe(async curPart => {
-      this.curTab = curPart;
-      await this.onTabChange(curPart);
+  ngOnInit(): void {
+    this.store.getCurPart().subscribe(curPart => {
+      this.audios = this.generateAudios(curPart);
+      this.updatePaginatedAudios();
     });
   }
 
+  loadAudio(url: string): void {
+    if (url===this.currentAudioUrl){
+      this.currentAudioUrl = undefined;
+      const player = this.audioPlayer?.nativeElement;
+      player?.pause()
+    }
+    this.currentAudioUrl = url;
+      const player = this.audioPlayer?.nativeElement;
+      if (player) {
+        player.load();
+        player.play();
+      }
+
+  }
+
   onPlay(audioPlayer: HTMLAudioElement): void {
-    this.stopAllAudios(audioPlayer);
     audioPlayer.play();
   }
 
-  onPause(currentAudio: HTMLAudioElement): void {
-    if (currentAudio) {
-      currentAudio.pause();
-      this.isPlaying = false;
-    }
+  onPause(audioPlayer: HTMLAudioElement): void {
+    audioPlayer.pause();
   }
 
   onPageChange(event: any): void {
@@ -50,71 +53,22 @@ export class TabBodyComponent implements OnInit {
     this.updatePaginatedAudios();
   }
 
+  onCloseAudio(): void {
+    this.currentAudioUrl = undefined;
+  }
+
   private updatePaginatedAudios(): void {
-    const startIndex = this.currentPage * this.pageSize;
-    const endIndex = startIndex + this.pageSize;
-    this.paginatedAudios = this.audios.slice(startIndex, endIndex);
+    const start = this.currentPage * this.pageSize;
+    const end = start + this.pageSize;
+    this.paginatedAudios = this.audios.slice(start, end);
   }
 
-  private stopAllAudios(currentAudio: HTMLAudioElement): void {
-    const allAudioPlayers = document.querySelectorAll('audio');
-    allAudioPlayers.forEach((audio: HTMLAudioElement) => {
-      if (audio !== currentAudio) {
-        audio.pause();
-      }
-    });
-  }
-
-  private async onTabChange(tabIndex: number): Promise<void> {
-    if (this.isAudiosLoaded(tabIndex)) {
-      return;
-    }
-    try {
-      const audios = await this.audioLoaderService.preloadAudioFiles(tabIndex);
-      const sortedAudios = this.sortAudio(audios);
-      this.updateAudios(tabIndex, sortedAudios);
-    } catch (error) {
-      console.error('Ошибка при загрузке аудиофайлов:', error);
-    }
-  }
-
-  private isAudiosLoaded(tabIndex: number): boolean {
-    switch (tabIndex) {
-      case 1:
-        return this.audios1.length > 0;
-      case 2:
-        return this.audios2.length > 0;
-      case 3:
-        return this.audios3.length > 0;
-      default:
-        return false;
-    }
-  }
-
-  private updateAudios(tabIndex: number, audios: any[]): void {
-    switch (tabIndex) {
-      case 1:
-        this.audios1 = this.sortAudio(audios);
-        break;
-      case 2:
-        this.audios2 = this.sortAudio(audios);
-        break;
-      case 3:
-        this.audios3 = this.sortAudio(audios);
-        break;
-    }
-    if (tabIndex === this.curTab) {
-      this.audios = this.sortAudio(audios);
-      this.updatePaginatedAudios();
-    }
-  }
-
-  private sortAudio(data: any[]): any[] {
-    data.sort((a, b) => {
-      const numA = parseInt(a.title.replace(/[^\d]/g, ''), 10); // Извлекаем число из строки (например, "Урок 2" -> 2)
-      const numB = parseInt(b.title.replace(/[^\d]/g, ''), 10); // То же для второго объекта
-      return numA - numB;
-    });
-    return data;
+  private generateAudios(part: number): any[] {
+    if (part < 1 || part > 3) return [];
+    const basePath = `/assets/part${part}/part${part}-lesson-`;
+    return Array.from({ length: 30 }, (_, i) => ({
+      title: `Урок ${i + 1}`,
+      url: `${basePath}${i + 1}.mp3`
+    }));
   }
 }

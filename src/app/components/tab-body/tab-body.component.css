@@ -12,10 +12,18 @@ mat-paginator {
   width: 100%;
 }
 
+.audio-container {
+  display: flex;
+  width: 100vw;
+  position: fixed;
+  bottom: 90px;
+  left: 0;
+  text-align: center;
+  align-items: center;
+  flex-direction: row;
+  justify-content: center;
+}
+
 .audio-controller {
-  position: absolute;
-  bottom: 0;
-  z-index: 1;
-  padding: 10px;
-  flex-shrink: 0;
+  width: 70vw!important;
 }
