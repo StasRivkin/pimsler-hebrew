@@ -17,13 +17,17 @@ import {MatListModule} from "@angular/material/list";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {MatIconModule} from "@angular/material/icon";
 import {NgxAudioPlayerModule} from "@khajegan/ngx-audio-player";
+import {MatTableModule} from "@angular/material/table";
+import {MatSortModule} from "@angular/material/sort";
+import { TableDataComponent } from './components/table-data/table-data.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TabsComponent,
     HeaderComponent,
-    TabBodyComponent
+    TabBodyComponent,
+    TableDataComponent
   ],
   imports: [
     BrowserModule,
@@ -39,6 +43,8 @@ import {NgxAudioPlayerModule} from "@khajegan/ngx-audio-player";
     MatProgressBarModule,
     MatIconModule,
     NgxAudioPlayerModule,
+    MatTableModule,
+    MatSortModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
       // Register the ServiceWorker as soon as the application is stable

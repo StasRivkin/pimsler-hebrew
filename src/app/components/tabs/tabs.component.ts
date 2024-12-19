@@ -21,6 +21,7 @@ export class TabsComponent implements OnInit {
   async onTabChange(event: any) {
     const selectedIndex = event.index;
     this.store.setCurPart(selectedIndex + 1);
+    this.store.setCurAudio(null);
   }
 
 }

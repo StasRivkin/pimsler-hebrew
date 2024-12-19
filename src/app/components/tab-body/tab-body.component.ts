@@ -1,6 +1,5 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {DataStoreService} from '../../store/data-store.service';
-import {log} from "@angular-devkit/build-angular/src/builders/ssr-dev-server";
 
 @Component({
   selector: 'app-tab-body',
@@ -11,30 +10,29 @@ export class TabBodyComponent implements OnInit {
   @ViewChild('audioPlayer', {static: false}) audioPlayer!: ElementRef<HTMLAudioElement>;
 
   audios: any[] = [];
-  paginatedAudios: any[] = [];
+  curAudio: any;
   currentAudioUrl?: string;
-  currentPage = 0;
-  pageSize = 13;
 
-
-  isPlaying = false;        // Состояние воспроизведения
-  isMuted = false;          // Состояние звука
-  currentTime = 0;          // Текущее время
-  audioDuration = 0;        // Длительность трека
+  isPlaying = false;
+  isMuted = false;
+  currentTime = 0;
+  audioDuration = 0;
 
   constructor(private store: DataStoreService) {
   }
 
   ngOnInit(): void {
+    this.store.getCurAudio().subscribe(data => this.curAudio = data);
     this.store.getCurPart().subscribe(curPart => {
       this.audios = this.generateAudios(curPart);
-      this.updatePaginatedAudios();
+      // this.updatePaginatedAudios();
       this.currentAudioUrl = undefined;
       this.isMuted = false;
     });
   }
 
-  loadAudio(url: string): void {
+  loadAudio(audio: any, url: string): void {
+    this.store.setCurAudio(audio);
     if (url === this.currentAudioUrl) {
       return;
     }
@@ -63,22 +61,11 @@ export class TabBodyComponent implements OnInit {
     this.isMuted = false;
   }
 
-  onPageChange(event: any): void {
-    this.currentPage = event.pageIndex;
-    this.pageSize = event.pageSize;
-    this.updatePaginatedAudios();
-  }
-
   onCloseAudio(): void {
     this.currentAudioUrl = undefined;
     this.isPlaying = false;
     this.isMuted = false;
-  }
-
-  private updatePaginatedAudios(): void {
-    const start = this.currentPage * this.pageSize;
-    const end = start + this.pageSize;
-    this.paginatedAudios = this.audios.slice(start, end);
+    this.store.setCurAudio(null);
   }
 
   private generateAudios(part: number): any[] {
@@ -120,10 +107,10 @@ export class TabBodyComponent implements OnInit {
     const currentIndex = this.audios.findIndex(audio => audio.url === this.currentAudioUrl);
     if (currentIndex !== -1 && currentIndex < this.audios.length - 1) {
       const nextAudio = this.audios[currentIndex + 1];
-      this.loadAudio(nextAudio.url);
+      this.loadAudio(null, nextAudio.url);
       this.isPlaying = true;
       this.isMuted = false;
-    }else {
+    } else {
       this.isPlaying = false;
       this.isMuted = false;
     }

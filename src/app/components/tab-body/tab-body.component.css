@@ -16,11 +16,11 @@ mat-paginator {
   display: flex;
   width: 100vw;
   position: fixed;
-  bottom: 90px;
+  bottom: 0;
   left: 0;
   text-align: center;
   align-items: center;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
 }
 

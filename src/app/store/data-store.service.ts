@@ -6,7 +6,7 @@ import {BehaviorSubject, Observable} from "rxjs";
 })
 export class DataStoreService {
   private curPart: BehaviorSubject<number> = new BehaviorSubject<number>(0);
-  private curAudio: BehaviorSubject<HTMLAudioElement | undefined> = new BehaviorSubject<HTMLAudioElement | undefined>(undefined);
+  private curAudio: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   private loading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
 
@@ -21,11 +21,11 @@ export class DataStoreService {
     return this.curPart.asObservable();
   }
 
-  setCurAudio(data: HTMLAudioElement | undefined): void {
+  setCurAudio(data: any): void {
     this.curAudio.next(data);
   }
 
-  getCurAudio(): Observable<HTMLAudioElement | undefined> {
+  getCurAudio(): Observable<any> {
     return this.curAudio.asObservable();
   }
 
