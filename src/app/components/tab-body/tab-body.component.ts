@@ -1,5 +1,7 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {DataStoreService} from '../../store/data-store.service';
+import {MatTabGroup} from "@angular/material/tabs";
+import {log} from "@angular-devkit/build-angular/src/builders/ssr-dev-server";
 
 @Component({
   selector: 'app-tab-body',
@@ -8,7 +10,6 @@ import {DataStoreService} from '../../store/data-store.service';
 })
 export class TabBodyComponent implements OnInit {
   @ViewChild('audioPlayer', {static: false}) audioPlayer!: ElementRef<HTMLAudioElement>;
-
   audios: any[] = [];
   curAudio: any;
   currentAudioUrl?: string;
@@ -22,10 +23,25 @@ export class TabBodyComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.store.getCurAudio().subscribe(data => this.curAudio = data);
+    this.store.getCurAudio().subscribe(data => {
+      if (data) {
+        this.curAudio = data;
+        const tabHeader = document.querySelector('.mat-mdc-tab-header.mat-mdc-tab-header-pagination-controls-enabled');
+        if (tabHeader) {
+          (tabHeader as HTMLElement).style.display = 'none';
+        }
+      }else{
+        this.curAudio = data;
+        const tabHeader = document.querySelector('.mat-mdc-tab-header.mat-mdc-tab-header-pagination-controls-enabled');
+        if (tabHeader) {
+          (tabHeader as HTMLElement).style.display = 'flex';
+        }
+      }
+
+
+    });
     this.store.getCurPart().subscribe(curPart => {
       this.audios = this.generateAudios(curPart);
-      // this.updatePaginatedAudios();
       this.currentAudioUrl = undefined;
       this.isMuted = false;
     });

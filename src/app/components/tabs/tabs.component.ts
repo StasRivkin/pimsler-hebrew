@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {DataStoreService} from "../../store/data-store.service";
-import {AudioLoaderService} from "../../services/audio-loader.service";
 
 @Component({
   selector: 'app-tabs',

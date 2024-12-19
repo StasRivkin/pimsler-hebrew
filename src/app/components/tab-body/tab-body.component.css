@@ -116,3 +116,28 @@ mat-paginator {
   border: 2px solid rgba(200, 25, 185, 0.87);
 }
 
+.back-button{
+  background: rgba(200, 25, 185, 0.87);
+  color: white;
+}
+
+.play-button {
+  background: #663ab6;
+  color: white;
+  transition: background 0.3s ease;
+}
+
+.play-button.play-state {
+  background: rgba(200, 25, 185, 0.87);
+}
+
+.mute-button {
+  background: #663ab6;
+  color: white;
+  transition: background 0.3s ease;
+}
+
+.mute-button.mute-state {
+  background: rgba(200, 25, 185, 0.87);
+}
+

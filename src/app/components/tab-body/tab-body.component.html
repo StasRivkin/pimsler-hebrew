@@ -1,4 +1,5 @@
-<div style="height: 90%;display: flex;flex-direction: column;flex-wrap: nowrap;justify-content: flex-start;overflow-y: auto;">
+<div
+  style="height: 90%;display: flex;flex-direction: column;flex-wrap: nowrap;justify-content: flex-start;overflow-y: auto;">
   <mat-list *ngIf="!curAudio">
     <mat-list-item *ngFor="let audio of audios" style="display: contents;">
       <button class="lessonButton"
@@ -11,7 +12,13 @@
     </mat-list-item>
   </mat-list>
   <div *ngIf="curAudio" style="text-align: center">
-    <h2 style="margin: 0 auto;">{{ curAudio.title }}</h2>
+    <div style="display: flex; flex-direction: row; align-items: center;">
+      <button mat-icon-button class="back-button" (click)="onCloseAudio()">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <h2 style="margin: 0 auto;">{{ curAudio.title }}</h2>
+    </div>
+
     <app-table-data></app-table-data>
   </div>
   <div class="audio-container" *ngIf="currentAudioUrl" style="margin-bottom: 1rem;">
@@ -22,10 +29,18 @@
       Ваш браузер не поддерживает аудио.
     </audio>
     <div class="audio-controls" style="width: 90%; display: flex; flex-wrap: nowrap;justify-content: space-between">
-      <button mat-icon-button (click)="togglePlayPause()">
+      <button
+        class="play-button"
+        mat-icon-button
+        (click)="togglePlayPause()"
+        [ngClass]="{ 'play-state': isPlaying }">
         <mat-icon>{{ isPlaying ? 'pause' : 'play_arrow' }}</mat-icon>
       </button>
-      <button mat-icon-button (click)="toggleMute()">
+      <button
+        class="mute-button"
+        mat-icon-button
+        (click)="toggleMute()"
+        [ngClass]="{ 'mute-state': isMuted }">
         <mat-icon>{{ isMuted ? 'volume_off' : 'volume_up' }}</mat-icon>
       </button>
       <div class="time-display" style="display: flex;font-size: smaller; align-items: center">
@@ -39,9 +54,9 @@
         (input)="onSeek($event)"
         class="progress-bar"
       />
-      <button mat-icon-button class="close-button" (click)="onCloseAudio()">
-        <mat-icon>close</mat-icon>
-      </button>
+      <!--      <button mat-icon-button class="close-button" (click)="onCloseAudio()">-->
+      <!--        <mat-icon>close</mat-icon>-->
+      <!--      </button>-->
     </div>
   </div>
 </div>
