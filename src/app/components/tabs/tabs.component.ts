@@ -1,7 +1,5 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component,  OnInit} from '@angular/core';
 import {DataStoreService} from "../../store/data-store.service";
-import {MatTabGroup} from "@angular/material/tabs";
-import {log} from "@angular-devkit/build-angular/src/builders/ssr-dev-server";
 
 @Component({
   selector: 'app-tabs',
@@ -17,14 +15,13 @@ export class TabsComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.setCurPart(1);
-    this.store.getCurPart().subscribe(data => {
-      const tabHeaderList = document.querySelector('.mat-mdc-tab-list');
-      if (tabHeaderList) {
-        (tabHeaderList as HTMLElement).style.overflowX = 'auto!important';
-        (tabHeaderList as HTMLElement).style.transform = 'unset!important';
-        tabHeaderList.classList.add('hide-scrollbar!important');
-      }
-    });
+    // this.store.getCurPart().subscribe(data => {
+    //   const tabHeaderList = document.querySelector('.mat-mdc-tab-list');
+    //   if (tabHeaderList) {
+    //     (tabHeaderList as HTMLElement).style.overflowX = 'auto!important';
+    //     (tabHeaderList as HTMLElement).style.transform = 'unset!important';
+    //   }
+    // });
   }
 
   async onTabChange(event: any) {

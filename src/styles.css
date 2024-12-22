@@ -4,6 +4,6 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-::ng-deep ::-webkit-scrollbar {
-  display: none!important;
-}
+/*::ng-deep ::-webkit-scrollbar {*/
+/*  display: none!important;*/
+/*}*/
