@@ -12,5 +12,7 @@
   transform: unset!important;
 }
 
-
+::ng-deep ::-webkit-scrollbar {
+  display: none!important;
+}
 
