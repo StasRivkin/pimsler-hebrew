@@ -1,5 +1,6 @@
-import {Component,  OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {DataStoreService} from "../../store/data-store.service";
+import {MatTabGroup} from "@angular/material/tabs";
 
 @Component({
   selector: 'app-tabs',
@@ -7,6 +8,8 @@ import {DataStoreService} from "../../store/data-store.service";
   styleUrls: ['./tabs.component.css']
 })
 export class TabsComponent implements OnInit {
+  @ViewChild('tabGroup') tabGroup!: MatTabGroup;
+  curPart: number = 0;
 
   constructor(
     private store: DataStoreService,
@@ -16,6 +19,7 @@ export class TabsComponent implements OnInit {
   ngOnInit(): void {
     this.store.setCurPart(1);
     this.store.getCurPart().subscribe(data => {
+      this.curPart = data;
       const tabHeaderList = document.querySelector('.mat-mdc-tab-list');
       if (tabHeaderList) {
         (tabHeaderList as HTMLElement).style.overflowX = 'auto';

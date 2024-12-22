@@ -1,5 +1,5 @@
 <div style="height: 100%; display: flex; flex-direction: column; justify-content: center">
-  <mat-tab-group style="height: 100%; width: 90vw;" (selectedTabChange)="onTabChange($event)">
+  <mat-tab-group #tabGroup style="height: 100%; width: 90vw;" (selectedTabChange)="onTabChange($event)" >
     <mat-tab label="Настоящее">
       <app-tab-body></app-tab-body>
     </mat-tab>
