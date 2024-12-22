@@ -2,16 +2,16 @@
   height: 100%!important;
 }
 
-/*::-webkit-scrollbar {*/
-/*  display: none!important;*/
-/*}*/
+::-webkit-scrollbar {
+  display: none!important;
+}
 
 ::ng-deep .mat-mdc-tab-list {
   overflow-x: auto!important;
   transform: unset!important;
 }
 
-/*::ng-deep ::-webkit-scrollbar {*/
-/*  display: none!important;*/
-/*}*/
+::ng-deep ::-webkit-scrollbar {
+  display: none!important;
+}
 
