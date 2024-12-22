@@ -2,11 +2,6 @@
   height: 100%!important;
 }
 
-::-webkit-scrollbar {
-  display: none;
-}
-
-
 ::ng-deep .mat-mdc-tab-list {
   overflow-x: auto;
   transform: unset!important;
