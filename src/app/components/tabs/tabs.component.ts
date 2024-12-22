@@ -17,14 +17,14 @@ export class TabsComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.setCurPart(1);
-    this.store.getCurPart().subscribe(data => {
-      const tabHeaderList = document.querySelector('.mat-mdc-tab-list');
-      if (tabHeaderList) {
-        (tabHeaderList as HTMLElement).style.overflowX = 'auto';
-        (tabHeaderList as HTMLElement).style.transform = 'unset';
-        tabHeaderList.classList.add('hide-scrollbar');
-      }
-    });
+    // this.store.getCurPart().subscribe(data => {
+    //   const tabHeaderList = document.querySelector('.mat-mdc-tab-list');
+    //   if (tabHeaderList) {
+    //     (tabHeaderList as HTMLElement).style.overflowX = 'auto';
+    //     (tabHeaderList as HTMLElement).style.transform = 'unset';
+    //     tabHeaderList.classList.add('hide-scrollbar');
+    //   }
+    // });
   }
 
   async onTabChange(event: any) {
