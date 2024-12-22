@@ -15,13 +15,13 @@ export class TabsComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.setCurPart(1);
-    this.store.getCurPart().subscribe(data => {
-      const tabHeaderList = document.querySelector('.mat-mdc-tab-list');
-      if (tabHeaderList) {
-        (tabHeaderList as HTMLElement).style.overflowX = 'auto';
-        (tabHeaderList as HTMLElement).style.transform = 'unset';
-      }
-    });
+    // this.store.getCurPart().subscribe(data => {
+    //   const tabHeaderList = document.querySelector('.mat-mdc-tab-list');
+    //   if (tabHeaderList) {
+    //     (tabHeaderList as HTMLElement).style.overflowX = 'auto';
+    //     (tabHeaderList as HTMLElement).style.transform = 'unset';
+    //   }
+    // });
   }
 
   async onTabChange(event: any) {
