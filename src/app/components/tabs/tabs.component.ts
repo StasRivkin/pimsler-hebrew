@@ -18,9 +18,12 @@ export class TabsComponent implements OnInit {
   ngOnInit(): void {
     this.store.setCurPart(1);
     this.store.getCurPart().subscribe(data => {
+
       const tabHeader = document.querySelector('.mat-mdc-tab-label-container');
-      if (tabHeader) {
+      const tabHeaderList = document.querySelector('.mat-mdc-tab-list');
+      if (tabHeader && tabHeaderList) {
         (tabHeader as HTMLElement).style.overflowX = 'auto';
+        (tabHeaderList as HTMLElement).style.transform = 'unset';
       }
     });
 
