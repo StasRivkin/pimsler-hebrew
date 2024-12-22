@@ -1,5 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {DataStoreService} from "../../store/data-store.service";
+import {MatTabGroup} from "@angular/material/tabs";
+import {log} from "@angular-devkit/build-angular/src/builders/ssr-dev-server";
 
 @Component({
   selector: 'app-tabs',
@@ -15,12 +17,21 @@ export class TabsComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.setCurPart(1);
+    this.store.getCurPart().subscribe(data => {
+      const tabHeader = document.querySelector('.mat-mdc-tab-label-container');
+      if (tabHeader) {
+        (tabHeader as HTMLElement).style.overflowX = 'auto';
+      }
+    });
+
   }
 
   async onTabChange(event: any) {
+    console.log("onTabChange", event);
     const selectedIndex = event.index;
     this.store.setCurPart(selectedIndex + 1);
     this.store.setCurAudio(null);
+    this.store.setActionSlider("")
   }
 
 }

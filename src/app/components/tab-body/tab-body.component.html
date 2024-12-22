@@ -11,6 +11,7 @@
       </button>
     </mat-list-item>
   </mat-list>
+
   <div *ngIf="curAudio" style="text-align: center">
     <div style="display: flex; flex-direction: row; align-items: center;">
       <button mat-icon-button class="back-button" (click)="onCloseAudio()">
@@ -18,9 +19,9 @@
       </button>
       <h2 style="margin: 0 auto;">{{ curAudio.title }}</h2>
     </div>
-
     <app-table-data></app-table-data>
   </div>
+
   <div class="audio-container" *ngIf="currentAudioUrl" style="margin-bottom: 1rem;">
     <audio [style.display]="'none'" class="audio-controller" #audioPlayer controls autoplay style="width: 100%;"
            (play)="onPlay(audioPlayer)" (pause)="onPause(audioPlayer)" (timeupdate)="onTimeUpdate(audioPlayer)"

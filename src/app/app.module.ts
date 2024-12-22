@@ -1,5 +1,5 @@
 import {NgModule, isDevMode, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {BrowserModule, HammerModule} from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,6 +20,7 @@ import {NgxAudioPlayerModule} from "@khajegan/ngx-audio-player";
 import {MatTableModule} from "@angular/material/table";
 import {MatSortModule} from "@angular/material/sort";
 import { TableDataComponent } from './components/table-data/table-data.component';
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 @NgModule({
   declarations: [
@@ -45,6 +46,8 @@ import { TableDataComponent } from './components/table-data/table-data.component
     NgxAudioPlayerModule,
     MatTableModule,
     MatSortModule,
+    HammerModule,
+    MatSnackBarModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
       // Register the ServiceWorker as soon as the application is stable

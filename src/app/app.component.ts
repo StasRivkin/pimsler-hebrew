@@ -1,46 +1,30 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {SwUpdate} from '@angular/service-worker';
+import {window} from "rxjs";
+import {DataStoreService} from "./store/data-store.service";
+import {UpdateService} from "./services/updateService/update.service";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'pimsler-hebrew';
 
-  constructor(private swUpdate: SwUpdate) {
-    if (this.swUpdate.isEnabled) {
-      this.swUpdate.versionUpdates.subscribe(event => {
-        if (event.type === 'VERSION_READY') {
-          if (confirm('A new version of the app is available. Would you like to load the new version?')) {
-            this.clearCache().then(() => {
-              window.location.reload();
-            });
-          }
-        }
-      });
-      this.checkForUpdates();
-    }
+  constructor(private store: DataStoreService, private updateService: UpdateService) {
+  }
+
+  ngOnInit(): void {
+    this.checkForUpdates();
   }
 
   checkForUpdates() {
-    if (this.swUpdate.isEnabled) {
-      this.swUpdate.checkForUpdate().then(() => {
-        console.log('Update check complete');
-      }).catch(err => {
-        console.log('Update check failed:', err);
-      });
-    }
+    this.updateService['updates'].checkForUpdate().then(() => {
+      console.log('Проверка обновлений завершена');
+    }).catch(err => {
+      console.error('Ошибка проверки обновлений:', err);
+    });
   }
 
-  async clearCache() {
-    if ('caches' in window) {
-      const cacheNames = await caches.keys();
-      for (const cacheName of cacheNames) {
-        await caches.delete(cacheName);
-      }
-      console.log('Cache cleared');
-    }
-  }
 }

@@ -9,6 +9,8 @@ export class DataStoreService {
   private curAudio: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   private loading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
+  private actionSlider: BehaviorSubject<string> = new BehaviorSubject<string>('');
+
 
   constructor() {
   }
@@ -36,6 +38,14 @@ export class DataStoreService {
 
   getLoading(): Observable<boolean> {
     return this.loading.asObservable();
+  }
+
+  setActionSlider(status: string): void {
+    this.actionSlider.next(status);
+  }
+
+  getActionSlider(): Observable<string> {
+    return this.actionSlider.asObservable();
   }
 
   private sortAudio(data: any[]): any[] {
