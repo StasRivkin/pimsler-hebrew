@@ -18,8 +18,8 @@ export class TabsComponent implements OnInit {
     // this.store.getCurPart().subscribe(data => {
     //   const tabHeaderList = document.querySelector('.mat-mdc-tab-list');
     //   if (tabHeaderList) {
-    //     (tabHeaderList as HTMLElement).style.overflowX = 'auto!important';
-    //     (tabHeaderList as HTMLElement).style.transform = 'unset!important';
+    //     (tabHeaderList as HTMLElement).style.overflowX = 'auto';
+    //     (tabHeaderList as HTMLElement).style.transform = 'unset';
     //   }
     // });
   }
