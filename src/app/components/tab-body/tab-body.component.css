@@ -41,9 +41,9 @@ mat-paginator {
   cursor: pointer;
 }
 
-.lessonButton:hover {
-  background-color: #663ab6; /* Цвет при наведении */
-}
+/*.lessonButton:hover {*/
+/*  background-color: #663ab6; !* Цвет при наведении *!*/
+/*}*/
 
 .progress-bar {
   -webkit-appearance: none;
