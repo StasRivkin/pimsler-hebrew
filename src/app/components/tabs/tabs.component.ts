@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {DataStoreService} from "../../store/data-store.service";
 import {MatTabGroup} from "@angular/material/tabs";
 import {take} from "rxjs";
@@ -8,8 +8,9 @@ import {take} from "rxjs";
   templateUrl: './tabs.component.html',
   styleUrls: ['./tabs.component.css']
 })
-export class TabsComponent implements OnInit {
-  @ViewChild('tabGroup') tabGroup!: MatTabGroup;
+export class TabsComponent implements OnInit, AfterViewInit {
+  @ViewChild('tabGroup', { static: false }) tabGroup!: MatTabGroup;
+
   previousX: number = 0;
   isScrolling: boolean = false;
   lastDirection: 'left' | 'right' | null = null;
@@ -25,13 +26,12 @@ export class TabsComponent implements OnInit {
     this.store.getCurPart().subscribe(data => {
       this.curPart = data;
       console.log(data)
+    });
 
-      //   this.curPart = data;
-      //   const tabHeaderList = document.querySelector('.mat-mdc-tab-list');
-      //   if (tabHeaderList) {
-      //     (tabHeaderList as HTMLElement).style.overflowX = 'auto';
-      //     (tabHeaderList as HTMLElement).style.transform = 'unset';
-      //   }
+  }
+  ngAfterViewInit(): void {
+    this.tabGroup.selectedTabChange.subscribe((data) => {
+      this.centerActiveTab();
     });
   }
 
@@ -39,7 +39,19 @@ export class TabsComponent implements OnInit {
     const selectedIndex = event.index;
     this.store.setCurPart(selectedIndex + 1);
     this.store.setCurAudio(null);
-    this.store.setActionSlider("")
+    this.store.setActionSlider("");
+  }
+
+  private centerActiveTab(): void {
+    const tabHeaderElement = document.getElementsByClassName("mat-mdc-tab-label-container")[0] as HTMLElement;
+    const activeTab = tabHeaderElement.querySelector('.mdc-tab--active') as HTMLElement;
+    if (tabHeaderElement && activeTab) {
+      const tabHeaderWidth = tabHeaderElement.offsetWidth;
+      const activeTabWidth = activeTab.offsetWidth;
+      const activeTabOffset = activeTab.offsetLeft;
+      const scrollPosition = activeTabOffset - tabHeaderWidth / 2 + activeTabWidth / 2;
+      tabHeaderElement.scrollTo({ left: scrollPosition, behavior: 'smooth' });
+    }
   }
 
   onTouchMove(event: TouchEvent): void {
@@ -91,5 +103,7 @@ export class TabsComponent implements OnInit {
       this.lastDirection = null;
     }
   }
+
+
 
 }

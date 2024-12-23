@@ -5,6 +5,7 @@
 :host::ng-deep.mat-mdc-tab-label-container {
   max-width: 100%;
   overflow-x: auto;
+  white-space: nowrap;
 }
 
 :host::ng-deep::-webkit-scrollbar {

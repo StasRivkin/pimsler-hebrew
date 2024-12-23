@@ -45,13 +45,6 @@ mat-paginator {
   background-color: #663ab6; /* Цвет при наведении */
 }
 
-.lessonButton.selected {
-  background-color: #663ab6; /* Выделенный цвет */
-  color: white;
-  font-weight: bold;
-  box-shadow: 0 0 10px rgba(200, 25, 185, 0.87); /* Тень для выделенной кнопки */
-}
-
 .progress-bar {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -141,9 +134,6 @@ mat-paginator {
   background: rgba(200, 25, 185, 0.87);
 }
 
-.mat-mdc-tab-body-wrapper{
-
-}
 
 
 
