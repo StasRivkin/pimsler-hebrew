@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActionStoreService} from "../../store/action-store.service";
 
 @Component({
@@ -6,15 +6,21 @@ import {ActionStoreService} from "../../store/action-store.service";
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit{
   isMenuOpen = false;
 
 
-  constructor(private actionStoreService: ActionStoreService) {
+  constructor(private actionStore: ActionStoreService) {
+  }
+
+  ngOnInit(): void {
+    this.actionStore.getIsBurgerMenuOpen().subscribe(flag => this.isMenuOpen = flag);
   }
 
   toggleMenu(): void {
     this.isMenuOpen = !this.isMenuOpen;
-    this.actionStoreService.setIsBurgerMenuOpen(this.isMenuOpen);
+    this.actionStore.setIsBurgerMenuOpen(this.isMenuOpen);
   }
+
+
 }
