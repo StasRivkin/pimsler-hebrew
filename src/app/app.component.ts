@@ -29,4 +29,9 @@ export class AppComponent implements OnInit {
       // this.actionStore.setIsBurgerMenuOpen(false);
     }
   }
+
+  closeMenu(){
+    console.log("clicked")
+    this.actionStore.setIsBurgerMenuOpen(false);
+  }
 }

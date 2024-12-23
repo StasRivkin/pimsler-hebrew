@@ -5,8 +5,8 @@
 </div>
 
 <mat-sidenav-container *ngIf="isMenuOpen" class="sidenav-container" style="height: 100vh;width:100vw;z-index: 2">
-  <mat-sidenav-content *ngIf="isMenuOpen">
-    <div style="height: 100vh; width: 100vw; background-color: rgba(0, 0, 0, 0.2);">
+  <mat-sidenav-content *ngIf="isMenuOpen" (click)="closeMenu()" (close)="closeMenu()">
+    <div *ngIf="isMenuOpen" style="height: 100vh; width: 100vw; background-color: rgba(0, 0, 0, 0.2);" (click)="closeMenu()">
     </div>
   </mat-sidenav-content>
   <mat-sidenav mode="over" position="end" [opened]="isMenuOpen">

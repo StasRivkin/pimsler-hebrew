@@ -12,3 +12,7 @@
 .mdc-list {
   padding: 8px 0;
 }
+
+:host::ng-deep.mat-drawer-backdrop{
+  display: none;
+}
