@@ -5,25 +5,22 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Устанавливаем Node.js версию 18 или более новую
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'  # Обновите до версии 18 или выше
+          node-version: '18'
 
-      # Устанавливаем зависимости
       - name: Install dependencies
         run: |
           npm install
 
-      # Строим проект
       - name: Build Angular project
         run: |
-          ng build --configuration production
+          ng build --configuration production --output-path=dist
 
-      # Загружаем артефакт для деплоя
-      - name: Upload artifact for deployment
-        uses: actions/upload-artifact@v3
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          name: dist
-          path: ./dist
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+
