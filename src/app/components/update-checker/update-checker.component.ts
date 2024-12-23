@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SwUpdate, VersionReadyEvent } from '@angular/service-worker';
+import { SwUpdate } from '@angular/service-worker';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({

@@ -24,13 +24,13 @@ export class TabBodyComponent implements OnInit {
     this.store.getCurAudio().subscribe(data => {
       if (data) {
         this.curAudio = data;
-        const tabHeader = document.querySelector('.mat-mdc-tab-header.mat-mdc-tab-header-pagination-controls-enabled');
+        const tabHeader = document.querySelector('.mat-mdc-tab-header');
         if (tabHeader) {
           (tabHeader as HTMLElement).style.display = 'none';
         }
       }else{
         this.curAudio = data;
-        const tabHeader = document.querySelector('.mat-mdc-tab-header.mat-mdc-tab-header-pagination-controls-enabled');
+        const tabHeader = document.querySelector('.mat-mdc-tab-header');
         if (tabHeader) {
           (tabHeader as HTMLElement).style.display = 'flex';
         }
