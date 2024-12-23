@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {SwUpdate} from '@angular/service-worker';
-import {window} from "rxjs";
+import {take, window} from "rxjs";
 import {DataStoreService} from "./store/data-store.service";
 import {UpdateService} from "./services/updateService/update.service";
 

@@ -1,7 +1,5 @@
 <div style="height: 100%; display: flex; flex-direction: column; justify-content: center">
-  <mat-tab-group #tabGroup style="height: 100%; width: 90vw;" (selectedTabChange)="onTabChange($event)" (touchmove)="onTouchMove($event)"
-                 (touchend)="onTouchEnd($event)"
-                 (touchcancel)="onTouchCancel($event)" [tabIndex]="curPart" [disablePagination]="true">
+  <mat-tab-group #tabGroup style="height: 100%; width: 90vw;" (selectedTabChange)="onTabChange($event)" [tabIndex]="curPart" [disablePagination]="true">
     <mat-tab label="Настоящее">
       <app-tab-body></app-tab-body>
     </mat-tab>

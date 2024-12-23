@@ -7,6 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class UpdateService {
   constructor(private updates: SwUpdate, private snackBar: MatSnackBar) {
+    console.log(updates)
     if (this.updates.isEnabled) {
       this.updates.versionUpdates.subscribe((event) => {
         if (event.type === 'VERSION_READY') {
