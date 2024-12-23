@@ -22,9 +22,11 @@ export class AppComponent implements OnInit {
 
   onAutoplayChange(event: any): void {
     if (event.checked) {
-      this.actionStore.setIsAutoplayModeOn(true)
+      this.actionStore.setIsAutoplayModeOn(true);
+      this.actionStore.setIsBurgerMenuOpen(false);
     } else {
-      this.actionStore.setIsAutoplayModeOn(false)
+      this.actionStore.setIsAutoplayModeOn(false);
+      this.actionStore.setIsBurgerMenuOpen(false);
     }
   }
 }
