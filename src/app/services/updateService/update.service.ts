@@ -10,6 +10,7 @@ export class UpdateService {
     console.log(updates)
     if (this.updates.isEnabled) {
       this.updates.versionUpdates.subscribe((event) => {
+        console.log('Update event:', event);
         if (event.type === 'VERSION_READY') {
           this.showUpdateNotification();
         }
