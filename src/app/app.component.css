@@ -15,5 +15,4 @@
 
 :host::ng-deep.mat-drawer-backdrop{
   display: none;
-  /*test*/
 }
