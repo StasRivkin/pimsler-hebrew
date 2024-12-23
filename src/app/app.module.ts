@@ -21,6 +21,7 @@ import {MatTableModule} from "@angular/material/table";
 import {MatSortModule} from "@angular/material/sort";
 import { TableDataComponent } from './components/table-data/table-data.component';
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import { UpdateCheckerComponent } from './components/update-checker/update-checker.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
     TabsComponent,
     HeaderComponent,
     TabBodyComponent,
-    TableDataComponent
+    TableDataComponent,
+    UpdateCheckerComponent
   ],
   imports: [
     BrowserModule,
