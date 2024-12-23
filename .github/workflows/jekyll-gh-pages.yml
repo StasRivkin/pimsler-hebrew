@@ -19,7 +19,7 @@ jobs:
       # Строим проект
       - name: Build Angular project
         run: |
-          npm run build -- --prod
+          ng build --configuration production
 
       # Загружаем артефакт для деплоя
       - name: Upload artifact for deployment
