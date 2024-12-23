@@ -1,5 +1,6 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {DataStoreService} from '../../store/data-store.service';
+import {ActionStoreService} from "../../store/action-store.service";
 
 @Component({
   selector: 'app-tab-body',
@@ -17,36 +18,38 @@ export class TabBodyComponent implements OnInit {
   currentTime = 0;
   audioDuration = 0;
 
-  constructor(private store: DataStoreService) {
+  isAutoplayModeOn = false;
+
+
+  constructor(private dataStore: DataStoreService, private actionStore: ActionStoreService) {
   }
 
   ngOnInit(): void {
-    this.store.getCurAudio().subscribe(data => {
+    this.dataStore.getCurAudio().subscribe(data => {
       if (data) {
         this.curAudio = data;
         const tabHeader = document.querySelector('.mat-mdc-tab-header');
         if (tabHeader) {
           (tabHeader as HTMLElement).style.display = 'none';
         }
-      }else{
+      } else {
         this.curAudio = data;
         const tabHeader = document.querySelector('.mat-mdc-tab-header');
         if (tabHeader) {
           (tabHeader as HTMLElement).style.display = 'flex';
         }
       }
-
-
     });
-    this.store.getCurPart().subscribe(curPart => {
+    this.dataStore.getCurPart().subscribe(curPart => {
       this.audios = this.generateAudios(curPart);
       this.currentAudioUrl = undefined;
       this.isMuted = false;
     });
+    this.actionStore.getIsAutoplayModeOn().subscribe(flag => this.isAutoplayModeOn = flag);
   }
 
   loadAudio(audio: any, url: string): void {
-    this.store.setCurAudio(audio);
+    this.dataStore.setCurAudio(audio);
     if (url === this.currentAudioUrl) {
       return;
     }
@@ -79,7 +82,7 @@ export class TabBodyComponent implements OnInit {
     this.currentAudioUrl = undefined;
     this.isPlaying = false;
     this.isMuted = false;
-    this.store.setCurAudio(null);
+    this.dataStore.setCurAudio(null);
   }
 
   private generateAudios(part: number): any[] {

@@ -25,7 +25,7 @@
   <div class="audio-container" *ngIf="currentAudioUrl" style="margin-bottom: 1rem;">
     <audio [style.display]="'none'" class="audio-controller" #audioPlayer controls style="width: 100%;"
            (play)="onPlay(audioPlayer)" (pause)="onPause(audioPlayer)" (timeupdate)="onTimeUpdate(audioPlayer)"
-           (ended)="onEnded(audioPlayer)">
+           (ended)="onEnded(audioPlayer)" [attr.autoplay]="isAutoplayModeOn ? true : null">
       <source [src]="currentAudioUrl" type="audio/mp3"/>
       Ваш браузер не поддерживает аудио.
     </audio>
@@ -61,5 +61,7 @@
     </div>
   </div>
 </div>
+
+
 
 

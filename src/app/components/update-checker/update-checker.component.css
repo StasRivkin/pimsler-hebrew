@@ -1,0 +1,15 @@
+
+mat-sidenav {
+  width: 50%; /* Меню будет занимать половину экрана по ширине */
+  max-width: 400px; /* Максимальная ширина меню */
+  z-index: 5;
+}
+
+mat-sidenav-content {
+  padding: 16px;
+}
+
+button {
+  margin-right: 16px; /* Сдвигаем кнопку от края */
+}
+

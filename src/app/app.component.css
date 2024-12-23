@@ -1,1 +1,14 @@
+.mat-drawer-container {
+  position: absolute;
+  top: 55px;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.2);
+}
 
+.mat-drawer{
+  width: 60%;
+}
+
+.mdc-list {
+  padding: 8px 0;
+}

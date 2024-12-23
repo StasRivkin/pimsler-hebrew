@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {ActionStoreService} from "../../store/action-store.service";
 
 @Component({
   selector: 'app-header',
@@ -6,5 +7,14 @@ import { Component } from '@angular/core';
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
+  isMenuOpen = false;
 
+
+  constructor(private actionStoreService: ActionStoreService) {
+  }
+
+  toggleMenu(): void {
+    this.isMenuOpen = !this.isMenuOpen;
+    this.actionStoreService.setIsBurgerMenuOpen(this.isMenuOpen);
+  }
 }

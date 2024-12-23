@@ -22,6 +22,11 @@ import {MatSortModule} from "@angular/material/sort";
 import { TableDataComponent } from './components/table-data/table-data.component';
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import { UpdateCheckerComponent } from './components/update-checker/update-checker.component';
+import {MatMenuModule} from "@angular/material/menu";
+import {MatSidenavModule} from "@angular/material/sidenav";
+import {MatPseudoCheckboxModule} from "@angular/material/core";
+import {FormsModule} from "@angular/forms";
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 @NgModule({
   declarations: [
@@ -50,12 +55,16 @@ import { UpdateCheckerComponent } from './components/update-checker/update-check
     MatSortModule,
     HammerModule,
     MatSnackBarModule,
+    MatSidenavModule,
+    MatCheckboxModule,
+    FormsModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
       // Register the ServiceWorker as soon as the application is stable
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000'
-    })
+    }),
+    FormsModule
   ],
   providers: [
     provideAnimationsAsync()
