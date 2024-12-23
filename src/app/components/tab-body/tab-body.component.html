@@ -23,7 +23,7 @@
   </div>
 
   <div class="audio-container" *ngIf="currentAudioUrl" style="margin-bottom: 1rem;">
-    <audio [style.display]="'none'" class="audio-controller" #audioPlayer controls autoplay style="width: 100%;"
+    <audio [style.display]="'none'" class="audio-controller" #audioPlayer controls style="width: 100%;"
            (play)="onPlay(audioPlayer)" (pause)="onPause(audioPlayer)" (timeupdate)="onTimeUpdate(audioPlayer)"
            (ended)="onEnded(audioPlayer)">
       <source [src]="currentAudioUrl" type="audio/mp3"/>

@@ -1,7 +1,5 @@
-import {Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {DataStoreService} from '../../store/data-store.service';
-import {MatTabGroup} from "@angular/material/tabs";
-import {log} from "@angular-devkit/build-angular/src/builders/ssr-dev-server";
 
 @Component({
   selector: 'app-tab-body',
@@ -56,7 +54,7 @@ export class TabBodyComponent implements OnInit {
     const player = this.audioPlayer?.nativeElement;
     if (player) {
       player.load();
-      // player.play();
+      player.play();
       player.muted = this.isMuted;
       this.isPlaying = true;
       player.onloadedmetadata = () => {
