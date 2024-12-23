@@ -56,7 +56,7 @@ export class TabBodyComponent implements OnInit {
     const player = this.audioPlayer?.nativeElement;
     if (player) {
       player.load();
-      player.play();
+      // player.play();
       player.muted = this.isMuted;
       this.isPlaying = true;
       player.onloadedmetadata = () => {
