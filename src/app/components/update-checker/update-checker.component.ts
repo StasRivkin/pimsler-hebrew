@@ -13,7 +13,7 @@ export class UpdateCheckerComponent implements OnInit {
     if (this.updates.isEnabled) {
       this.updates.versionUpdates.subscribe((event) => {
         console.log('Service Worker Update Event:', event);
-        if (event.type === 'VERSION_READY') {
+        if (event.type === 'VERSION_DETECTED') {
           this.promptUserToUpdate();
         }
       });
