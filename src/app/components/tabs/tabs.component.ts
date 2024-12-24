@@ -20,7 +20,6 @@ export class TabsComponent implements OnInit, AfterViewInit {
 
   showArrow: boolean = false;
   arrowPositionX: number = 0;
-  arrowPositionY: number = 0;
   arrowType: string = "";
   swipeDirection: string = "";
 
@@ -66,18 +65,15 @@ export class TabsComponent implements OnInit, AfterViewInit {
   onTouchStart(event: TouchEvent): void {
     this.touchStartX = event.touches[0].clientX;
     this.touchStartTime = new Date().getTime();
-
     this.swipeDirection = '';
   }
 
   onTouchMove(event: TouchEvent): void {
     this.touchEndX = event.touches[0].clientX;
-    this.arrowPositionY = event.touches[0].clientY;
     this.showArrow = true;
-
     if (this.curAudio) {
       if (this.touchEndX > this.touchStartX) {
-        this.swipeDirection = 'forward';
+        this.swipeDirection = 'back';
         this.arrowType = 'back';
       }else{
         this.swipeDirection = 'back';
@@ -89,8 +85,8 @@ export class TabsComponent implements OnInit, AfterViewInit {
       this.arrowType = this.swipeDirection === 'back' ? 'back' : 'forward';
     }
     this.arrowPositionX = this.swipeDirection === 'back'
-      ? event.touches[0].clientX + 25
-      : event.touches[0].clientX - 50;
+      ? 1
+      : (window.innerWidth-25);
   }
 
   onTouchEnd(): void {
@@ -113,7 +109,7 @@ export class TabsComponent implements OnInit, AfterViewInit {
     }
     if (this.curAudio) {
       const screenWidth = window.innerWidth;
-      if (this.swipeDirection === 'forward' && this.touchStartX < screenWidth / 3) {
+      if (this.swipeDirection === 'back' && this.touchStartX < screenWidth / 3) {
         this.dataStore.setCurAudio(null);
         this.showArrow = false;
         return;
