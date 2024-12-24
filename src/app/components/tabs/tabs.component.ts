@@ -13,9 +13,9 @@ export class TabsComponent implements OnInit, AfterViewInit {
 
   private touchStartX: number = 0;
   private touchEndX: number = 0;
-  private touchStartTime: number = 0; // Время начала касания
-  private swipeThreshold = 50; // Минимальное расстояние для свайпа
-  private timeThreshold = 200; // Максимальное время для определения короткого жеста (клика)
+  private touchStartTime: number = 0;
+  private swipeThreshold = 50;
+  private timeThreshold = 50;
 
 
   constructor(
@@ -69,12 +69,15 @@ export class TabsComponent implements OnInit, AfterViewInit {
     const touchEndTime = new Date().getTime();
     const timeDifference = touchEndTime - this.touchStartTime;
     const distanceX = this.touchEndX - this.touchStartX;
-
-    if (Math.abs(distanceX) < this.swipeThreshold || timeDifference < this.timeThreshold) {
+    console.log(this.touchEndX + " - "+ this.touchStartX)
+    console.log(Math.abs(distanceX) +" = "+ this.swipeThreshold)
+    if (Math.abs(distanceX) < this.swipeThreshold || timeDifference < this.timeThreshold || this.touchEndX === 0) {
+      return;
+    }
+    if(Math.abs(distanceX) < this.swipeThreshold){
       return;
     }
     const currentIndex = this.tabGroup.selectedIndex ?? 0;
-
     if (distanceX < 0) {
       if (currentIndex < this.tabGroup._tabs.length - 1) {
         this.tabGroup.selectedIndex = currentIndex + 1;
