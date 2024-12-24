@@ -1,7 +1,7 @@
 :host::ng-deep.mat-mdc-tab-body-wrapper {
   height: 100% !important;
   width: 100% !important;
-  /*margin-left: 17px;*/
+  margin-left: 7px;
 }
 
 :host::ng-deep.mat-mdc-tab-label-container {
