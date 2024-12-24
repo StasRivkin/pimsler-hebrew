@@ -1,9 +1,12 @@
-<div style="height: 100%; display: flex; flex-direction: column; justify-content: center">
+<div style="height: 100%">
   <mat-tab-group #tabGroup style="height: 100%; width: 90vw;" (selectedTabChange)="onTabChange($event)" [tabIndex]="curPart" [disablePagination]="true">
     <mat-tab label="Настоящее">
       <app-tab-body></app-tab-body>
     </mat-tab>
     <mat-tab label="Прошедшее">
+      <app-tab-body></app-tab-body>
+    </mat-tab>
+    <mat-tab label="Будущее">
       <app-tab-body></app-tab-body>
     </mat-tab>
     <mat-tab label="Будущее">

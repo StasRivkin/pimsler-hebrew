@@ -20,7 +20,6 @@ export class TabBodyComponent implements OnInit {
 
   isAutoplayModeOn = false;
 
-
   constructor(private dataStore: DataStoreService, private actionStore: ActionStoreService) {
   }
 
@@ -49,6 +48,7 @@ export class TabBodyComponent implements OnInit {
   }
 
   loadAudio(audio: any, url: string): void {
+    console.log("clicked");
     this.dataStore.setCurAudio(audio);
     if (url === this.currentAudioUrl) {
       return;

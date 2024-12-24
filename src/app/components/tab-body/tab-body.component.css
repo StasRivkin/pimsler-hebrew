@@ -12,6 +12,10 @@ mat-paginator {
   width: 100%;
 }
 
+.mat-mdc-list{
+  margin: 5px;
+}
+
 .audio-container {
   display: flex;
   width: 100vw;
@@ -37,13 +41,9 @@ mat-paginator {
   text-align: center;
   border-radius: 4px;
   border: none;
-  width: 100%;
+  width: 93%!important;
   cursor: pointer;
 }
-
-/*.lessonButton:hover {*/
-/*  background-color: #663ab6; !* Цвет при наведении *!*/
-/*}*/
 
 .progress-bar {
   -webkit-appearance: none;
