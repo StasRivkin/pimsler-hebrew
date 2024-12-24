@@ -34,4 +34,5 @@ export class AppComponent implements OnInit {
     console.log("clicked")
     this.actionStore.setIsBurgerMenuOpen(false);
   }
+
 }

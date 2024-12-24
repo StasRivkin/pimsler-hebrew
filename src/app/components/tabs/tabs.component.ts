@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, OnInit, QueryList, ViewChild} from '@angular/core';
 import {DataStoreService} from "../../store/data-store.service";
-import { MatTabGroup} from "@angular/material/tabs";
+import {MatTabGroup} from "@angular/material/tabs";
 
 @Component({
   selector: 'app-tabs',
@@ -18,6 +18,11 @@ export class TabsComponent implements OnInit, AfterViewInit {
   private timeThreshold = 50;
   private curAudio: any; //to disable swipe if exists
 
+  showArrow: boolean = false;
+  arrowPositionX: number = 0;
+  arrowPositionY: number = 0;
+  arrowType: string = "";
+  swipeDirection: string = "";
 
   constructor(
     private dataStore: DataStoreService,
@@ -61,29 +66,62 @@ export class TabsComponent implements OnInit, AfterViewInit {
   onTouchStart(event: TouchEvent): void {
     this.touchStartX = event.touches[0].clientX;
     this.touchStartTime = new Date().getTime();
+
+    this.swipeDirection = '';
   }
 
   onTouchMove(event: TouchEvent): void {
     this.touchEndX = event.touches[0].clientX;
+    this.arrowPositionY = event.touches[0].clientY;
+    this.showArrow = true;
+
+    if (this.curAudio) {
+      if (this.touchEndX > this.touchStartX) {
+        this.swipeDirection = 'forward';
+        this.arrowType = 'back';
+      }else{
+        this.swipeDirection = 'back';
+        this.showArrow = false;
+      }
+    }
+    if (this.swipeDirection === '') {
+      this.swipeDirection = event.touches[0].clientX > this.touchStartX ? 'back' : 'forward';
+      this.arrowType = this.swipeDirection === 'back' ? 'back' : 'forward';
+    }
+    this.arrowPositionX = this.swipeDirection === 'back'
+      ? event.touches[0].clientX + 25
+      : event.touches[0].clientX - 50;
   }
 
   onTouchEnd(): void {
-
     const touchEndTime = new Date().getTime();
     const timeDifference = touchEndTime - this.touchStartTime;
     const distanceX = this.touchEndX - this.touchStartX;
     if (Math.abs(distanceX) < this.swipeThreshold || timeDifference < this.timeThreshold || this.touchEndX === 0) {
+      this.touchStartX = 0;
+      this.touchEndX = 0;
+      this.touchStartTime = 0;
+      this.showArrow = false;
       return;
     }
-    if(Math.abs(distanceX) < this.swipeThreshold){
+    if (Math.abs(distanceX) < this.swipeThreshold) {
+      this.touchStartX = 0;
+      this.touchEndX = 0;
+      this.touchStartTime = 0;
+      this.showArrow = false;
       return;
     }
     if (this.curAudio) {
       const screenWidth = window.innerWidth;
-      if (this.touchStartX < screenWidth / 3) {
+      if (this.swipeDirection === 'forward' && this.touchStartX < screenWidth / 3) {
         this.dataStore.setCurAudio(null);
+        this.showArrow = false;
+        return;
+      }else {
+        this.showArrow = false;
+        return;
       }
-    }else{
+    } else {
       const currentIndex = this.tabGroup.selectedIndex ?? 0;
       if (distanceX < 0) {
         if (currentIndex < this.tabGroup._tabs.length - 1) {
@@ -99,6 +137,7 @@ export class TabsComponent implements OnInit, AfterViewInit {
     this.touchStartX = 0;
     this.touchEndX = 0;
     this.touchStartTime = 0;
+    this.showArrow = false;
   }
 
 }

@@ -25,7 +25,6 @@ export class TabBodyComponent implements OnInit {
 
   ngOnInit(): void {
     this.dataStore.getCurAudio().subscribe(data => {
-      console.log(data)
       if (data) {
         this.curAudio = data;
         const tabHeader = document.querySelector('.mat-mdc-tab-header');

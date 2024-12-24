@@ -21,3 +21,11 @@
   max-width: 90vw;
 }
 
+.arrow {
+  position: absolute;
+  transform: translateY(-50%);
+  font-size: 30px; /* Размер стрелки */
+  z-index: 1000; /* Задаем высокий приоритет, чтобы стрелка была сверху */
+
+}
+
