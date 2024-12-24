@@ -1,19 +1,22 @@
-import { Component, OnInit } from '@angular/core';
-import { SwUpdate } from '@angular/service-worker';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import {Component, OnInit} from '@angular/core';
+import {SwUpdate} from '@angular/service-worker';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-update-checker',
   template: '',
 })
 export class UpdateCheckerComponent implements OnInit {
-  constructor(private updates: SwUpdate, private snackBar: MatSnackBar) {}
+  constructor(private updates: SwUpdate, private snackBar: MatSnackBar) {
+  }
 
   ngOnInit(): void {
     if (this.updates.isEnabled) {
-      this.updates.versionUpdates.subscribe((event) => {
+      // Проверяем обновления сразу при загрузке
+      this.updates.versionUpdates.subscribe(async (event) => {
         console.log('Service Worker Update Event:', event);
         if (event.type === 'VERSION_DETECTED') {
+          // Если обнаружена новая версия, показываем уведомление
           this.promptUserToUpdate();
         }
       });
@@ -26,7 +29,7 @@ export class UpdateCheckerComponent implements OnInit {
     const snackBarRef = this.snackBar.open(
       'Доступна новая версия приложения. Обновить?',
       'Обновить',
-      { duration: 6000 }
+      {duration: undefined} // Уведомление будет висеть до выбора действия
     );
 
     snackBarRef.onAction().subscribe(() => {
@@ -35,21 +38,23 @@ export class UpdateCheckerComponent implements OnInit {
   }
 
   private async activateUpdate(): Promise<void> {
-    await this.clearCache();
-    this.updates.activateUpdate().then(() => {
+    try {
+      await this.clearCache(); // Сбрасываем кеш
+      console.log('Cache cleared successfully.');
+      await this.updates.activateUpdate(); // Активируем обновление
       console.log('Update activated. Reloading the page...');
-      document.location.reload();
-    }).catch((error) => {
-      console.error('Failed to activate update:', error);
-    });
+      document.location.reload(); // Перезагружаем страницу
+    } catch (error) {
+      console.error('Error during update activation:', error);
+    }
   }
 
   private async clearCache(): Promise<void> {
     if ('caches' in window) {
       try {
-        const cacheNames = await caches.keys();
+        const cacheNames = await caches.keys(); // Получаем все имена кешей
         for (const cacheName of cacheNames) {
-          await caches.delete(cacheName);
+          await caches.delete(cacheName); // Удаляем каждый кеш
           console.log(`Cache "${cacheName}" deleted.`);
         }
       } catch (error) {
