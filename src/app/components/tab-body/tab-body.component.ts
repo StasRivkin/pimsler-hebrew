@@ -25,6 +25,7 @@ export class TabBodyComponent implements OnInit {
 
   ngOnInit(): void {
     this.dataStore.getCurAudio().subscribe(data => {
+      console.log(data)
       if (data) {
         this.curAudio = data;
         const tabHeader = document.querySelector('.mat-mdc-tab-header');
@@ -33,6 +34,9 @@ export class TabBodyComponent implements OnInit {
         }
       } else {
         this.curAudio = data;
+        this.currentAudioUrl = undefined;
+        this.isPlaying = false;
+        this.isMuted = false;
         const tabHeader = document.querySelector('.mat-mdc-tab-header');
         if (tabHeader) {
           (tabHeader as HTMLElement).style.display = 'flex';
@@ -48,6 +52,7 @@ export class TabBodyComponent implements OnInit {
   }
 
   loadAudio(audio: any, url: string): void {
+
     console.log("clicked");
     this.dataStore.setCurAudio(audio);
     if (url === this.currentAudioUrl) {
@@ -79,9 +84,6 @@ export class TabBodyComponent implements OnInit {
   }
 
   onCloseAudio(): void {
-    this.currentAudioUrl = undefined;
-    this.isPlaying = false;
-    this.isMuted = false;
     this.dataStore.setCurAudio(null);
   }
 

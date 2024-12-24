@@ -16,18 +16,20 @@ export class TabsComponent implements OnInit, AfterViewInit {
   private touchStartTime: number = 0;
   private swipeThreshold = 50;
   private timeThreshold = 50;
+  private curAudio: any; //to disable swipe if exists
 
 
   constructor(
-    private store: DataStoreService,
+    private dataStore: DataStoreService,
   ) {
   }
 
   ngOnInit(): void {
-    this.store.setCurPart(1);
-    this.store.getCurPart().subscribe(data => {
+    this.dataStore.setCurPart(1);
+    this.dataStore.getCurPart().subscribe(data => {
       this.curPart = data;
     });
+    this.dataStore.getCurAudio().subscribe(data => this.curAudio = data);
   }
 
   ngAfterViewInit(): void {
@@ -39,9 +41,9 @@ export class TabsComponent implements OnInit, AfterViewInit {
 
   async onTabChange(event: any) {
     const selectedIndex = event.index;
-    this.store.setCurPart(selectedIndex + 1);
-    this.store.setCurAudio(null);
-    this.store.setActionSlider("");
+    this.dataStore.setCurPart(selectedIndex + 1);
+    this.dataStore.setCurAudio(null);
+    this.dataStore.setActionSlider("");
   }
 
   private centerActiveTab(): void {
@@ -66,27 +68,34 @@ export class TabsComponent implements OnInit, AfterViewInit {
   }
 
   onTouchEnd(): void {
+
     const touchEndTime = new Date().getTime();
     const timeDifference = touchEndTime - this.touchStartTime;
     const distanceX = this.touchEndX - this.touchStartX;
-    console.log(this.touchEndX + " - "+ this.touchStartX)
-    console.log(Math.abs(distanceX) +" = "+ this.swipeThreshold)
     if (Math.abs(distanceX) < this.swipeThreshold || timeDifference < this.timeThreshold || this.touchEndX === 0) {
       return;
     }
     if(Math.abs(distanceX) < this.swipeThreshold){
       return;
     }
-    const currentIndex = this.tabGroup.selectedIndex ?? 0;
-    if (distanceX < 0) {
-      if (currentIndex < this.tabGroup._tabs.length - 1) {
-        this.tabGroup.selectedIndex = currentIndex + 1;
+    if (this.curAudio) {
+      const screenWidth = window.innerWidth;
+      if (this.touchStartX < screenWidth / 3) {
+        this.dataStore.setCurAudio(null);
       }
-    } else {
-      if (currentIndex > 0) {
-        this.tabGroup.selectedIndex = currentIndex - 1;
+    }else{
+      const currentIndex = this.tabGroup.selectedIndex ?? 0;
+      if (distanceX < 0) {
+        if (currentIndex < this.tabGroup._tabs.length - 1) {
+          this.tabGroup.selectedIndex = currentIndex + 1;
+        }
+      } else {
+        if (currentIndex > 0) {
+          this.tabGroup.selectedIndex = currentIndex - 1;
+        }
       }
     }
+
     this.touchStartX = 0;
     this.touchEndX = 0;
     this.touchStartTime = 0;
