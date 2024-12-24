@@ -76,7 +76,7 @@ export class TabsComponent implements OnInit, AfterViewInit {
         this.swipeDirection = 'back';
         this.arrowType = 'back';
       }else{
-        this.swipeDirection = 'back';
+        // this.swipeDirection = 'back';
         this.showArrow = false;
       }
     }
