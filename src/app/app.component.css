@@ -2,11 +2,13 @@
   position: absolute;
   top: 55px;
   left: 0;
-  background-color: rgba(0, 0, 0, 0.2);
+
 }
+
 
 .mat-drawer{
   width: 60%;
+  background-color: #eae2f7;
 }
 
 .mdc-list {
@@ -17,4 +19,14 @@
   display: none;
 }
 
+::ng-deep.mdc-checkbox__background {
+  background-color: #663ab6 !important; /* Цвет фона для выбранного состояния */
+}
 
+::ng-deep .mdc-checkbox__background {
+  border: 2px solid rgba(200, 25, 185, 0.87) !important; /* Цвет рамки для невыбранного состояния */
+}
+
+:host::ng-deep.mdc-checkbox__checkmark {
+  color: white !important; /* Цвет галочки */
+}

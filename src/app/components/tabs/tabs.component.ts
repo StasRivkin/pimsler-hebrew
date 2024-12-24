@@ -129,7 +129,6 @@ export class TabsComponent implements OnInit, AfterViewInit {
         }
       }
     }
-
     this.touchStartX = 0;
     this.touchEndX = 0;
     this.touchStartTime = 0;
