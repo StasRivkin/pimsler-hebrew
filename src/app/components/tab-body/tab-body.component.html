@@ -3,10 +3,8 @@
   <mat-list *ngIf="!curAudio">
     <mat-list-item *ngFor="let audio of audios" style="display: contents;">
       <div class="lessonButton"
-              mat-raised-button
-              (click)="loadAudio(audio, audio.url)"
-              style="width: 100%; margin-bottom: 8px;"
-              >
+           mat-raised-button
+           (click)="loadAudio(audio, audio.url)">
         <span style="margin-left: 10px;">{{ audio.title }}</span>
       </div>
     </mat-list-item>
