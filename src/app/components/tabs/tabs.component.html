@@ -1,4 +1,4 @@
-<div style="height: 100%">
+<div style="height: 100%" (touchstart)="onTouchStart($event)" (touchmove)="onTouchMove($event)" (touchend)="onTouchEnd()">
   <mat-tab-group #tabGroup style="height: 100%; width: 90vw;" (selectedTabChange)="onTabChange($event)" [tabIndex]="curPart" [disablePagination]="true">
     <mat-tab label="Настоящее">
       <app-tab-body></app-tab-body>
