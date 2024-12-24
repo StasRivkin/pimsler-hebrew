@@ -72,7 +72,7 @@ export class TabsComponent implements OnInit, AfterViewInit {
     this.touchEndX = event.touches[0].clientX;
     this.showArrow = true;
     if (this.curAudio) {
-      if (this.touchEndX > this.touchStartX) {
+      if (this.touchStartX < window.innerWidth / 3 && this.touchEndX > this.touchStartX) {
         this.swipeDirection = 'back';
         this.arrowType = 'back';
       }else{
