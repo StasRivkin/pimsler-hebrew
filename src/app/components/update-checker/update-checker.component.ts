@@ -18,6 +18,8 @@ export class UpdateCheckerComponent implements OnInit {
         if (event.type === 'VERSION_DETECTED') {
           // Если обнаружена новая версия, показываем уведомление
           this.promptUserToUpdate();
+        }else {
+          console.log('No updates');
         }
       });
     } else {
