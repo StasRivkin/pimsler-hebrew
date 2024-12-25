@@ -1,0 +1,153 @@
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-hebrew-alphabet',
+  templateUrl: './hebrew-alphabet.component.html',
+  styleUrls: ['./hebrew-alphabet.component.css']
+})
+export class HebrewAlphabetComponent implements OnInit {
+  private letters = [
+    { id: 1, letter: 'א', type: 'printed', translit: 'АЛЕФ (ПЕЧАТНЫЙ)' },
+    { id: 2, letter: 'א', type: 'cursive', translit: 'АЛЕФ (ПРОПИСНОЙ)' },
+    { id: 3, letter: 'ב', type: 'printed', translit: 'БЕТ (ПЕЧАТНЫЙ)' },
+    { id: 4, letter: 'ב', type: 'cursive', translit: 'БЕТ (ПРОПИСНОЙ)' },
+    { id: 5, letter: 'ג', type: 'printed', translit: 'ГИМЕЛЬ (ПЕЧАТНЫЙ)' },
+    { id: 6, letter: 'ג', type: 'cursive', translit: 'ГИМЕЛЬ (ПРОПИСНОЙ)' },
+    { id: 7, letter: 'ד', type: 'printed', translit: 'ДАЛЕТ (ПЕЧАТНЫЙ)' },
+    { id: 8, letter: 'ד', type: 'cursive', translit: 'ДАЛЕТ (ПРОПИСНОЙ)' },
+    { id: 9, letter: 'ה', type: 'printed', translit: 'ХЕ (ПЕЧАТНЫЙ)' },
+    { id: 10, letter: 'ה', type: 'cursive', translit: 'ХЕ (ПРОПИСНОЙ)' },
+    { id: 11, letter: 'ו', type: 'printed', translit: 'ВАВ (ПЕЧАТНЫЙ)' },
+    { id: 12, letter: 'ו', type: 'cursive', translit: 'ВАВ (ПРОПИСНОЙ)' },
+    { id: 13, letter: 'ז', type: 'printed', translit: 'ЗАИН (ПЕЧАТНЫЙ)' },
+    { id: 14, letter: 'ז', type: 'cursive', translit: 'ЗАИН (ПРОПИСНОЙ)' },
+    { id: 15, letter: 'ח', type: 'printed', translit: 'ХЕТ (ПЕЧАТНЫЙ)' },
+    { id: 16, letter: 'ח', type: 'cursive', translit: 'ХЕТ (ПРОПИСНОЙ)' },
+    { id: 17, letter: 'ט', type: 'printed', translit: 'ТЕТ (ПЕЧАТНЫЙ)' },
+    { id: 18, letter: 'ט', type: 'cursive', translit: 'ТЕТ (ПРОПИСНОЙ)' },
+    { id: 19, letter: 'י', type: 'printed', translit: 'ЙОД (ПЕЧАТНЫЙ)' },
+    { id: 20, letter: 'י', type: 'cursive', translit: 'ЙОД (ПРОПИСНОЙ)' },
+    { id: 21, letter: 'כ', type: 'printed', translit: 'КАФ (ПЕЧАТНЫЙ)' },
+    { id: 22, letter: 'כ', type: 'cursive', translit: 'КАФ (ПРОПИСНОЙ)' },
+    { id: 23, letter: 'ך', type: 'printed', translit: 'ФИНАЛЬНЫЙ КАФ (ПЕЧАТНЫЙ)' },
+    { id: 24, letter: 'ך', type: 'cursive', translit: 'ФИНАЛЬНЫЙ КАФ (ПРОПИСНОЙ)' },
+    { id: 25, letter: 'ל', type: 'printed', translit: 'ЛАМЕД (ПЕЧАТНЫЙ)' },
+    { id: 26, letter: 'ל', type: 'cursive', translit: 'ЛАМЕД (ПРОПИСНОЙ)' },
+    { id: 27, letter: 'מ', type: 'printed', translit: 'МЕМ (ПЕЧАТНЫЙ)' },
+    { id: 28, letter: 'מ', type: 'cursive', translit: 'МЕМ (ПРОПИСНОЙ)' },
+    { id: 29, letter: 'ם', type: 'printed', translit: 'ФИНАЛЬНЫЙ МЕМ (ПЕЧАТНЫЙ)' },
+    { id: 30, letter: 'ם', type: 'cursive', translit: 'ФИНАЛЬНЫЙ МЕМ (ПРОПИСНОЙ)' },
+    { id: 31, letter: 'נ', type: 'printed', translit: 'НУН (ПЕЧАТНЫЙ)' },
+    { id: 32, letter: 'נ', type: 'cursive', translit: 'НУН (ПРОПИСНОЙ)' },
+    { id: 33, letter: 'ן', type: 'printed', translit: 'ФИНАЛЬНЫЙ НУН (ПЕЧАТНЫЙ)' },
+    { id: 34, letter: 'ן', type: 'cursive', translit: 'ФИНАЛЬНЫЙ НУН (ПРОПИСНОЙ)' },
+    { id: 35, letter: 'ס', type: 'printed', translit: 'САМЕХ (ПЕЧАТНЫЙ)' },
+    { id: 36, letter: 'ס', type: 'cursive', translit: 'САМЕХ (ПРОПИСНОЙ)' },
+    { id: 37, letter: 'ע', type: 'printed', translit: 'АЙН (ПЕЧАТНЫЙ)' },
+    { id: 38, letter: 'ע', type: 'cursive', translit: 'АЙН (ПРОПИСНОЙ)' },
+    { id: 39, letter: 'פ', type: 'printed', translit: 'ПЕ (ПЕЧАТНЫЙ)' },
+    { id: 40, letter: 'פ', type: 'cursive', translit: 'ПЕ (ПРОПИСНОЙ)' },
+    { id: 41, letter: 'ף', type: 'printed', translit: 'ФИНАЛЬНЫЙ ПЕ (ПЕЧАТНЫЙ)' },
+    { id: 42, letter: 'ף', type: 'cursive', translit: 'ФИНАЛЬНЫЙ ПЕ (ПРОПИСНОЙ)' },
+    { id: 43, letter: 'צ', type: 'printed', translit: 'ЦАДЕ (ПЕЧАТНЫЙ)' },
+    { id: 44, letter: 'צ', type: 'cursive', translit: 'ЦАДЕ (ПРОПИСНОЙ)' },
+    { id: 45, letter: 'ץ', type: 'printed', translit: 'ФИНАЛЬНЫЙ ЦАДЕ (ПЕЧАТНЫЙ)' },
+    { id: 46, letter: 'ץ', type: 'cursive', translit: 'ФИНАЛЬНЫЙ ЦАДЕ (ПРОПИСНОЙ)' },
+    { id: 47, letter: 'ק', type: 'printed', translit: 'КУФ (ПЕЧАТНЫЙ)' },
+    { id: 48, letter: 'ק', type: 'cursive', translit: 'КУФ (ПРОПИСНОЙ)' },
+    { id: 49, letter: 'ר', type: 'printed', translit: 'РЕШ (ПЕЧАТНЫЙ)' },
+    { id: 50, letter: 'ר', type: 'cursive', translit: 'РЕШ (ПРОПИСНОЙ)' },
+    { id: 51, letter: 'ש', type: 'printed', translit: 'ШИН (ПЕЧАТНЫЙ)' },
+    { id: 52, letter: 'ש', type: 'cursive', translit: 'ШИН (ПРОПИСНОЙ)' },
+    { id: 53, letter: 'ת', type: 'printed', translit: 'ТАВ (ПЕЧАТНЫЙ)' },
+    { id: 54, letter: 'ת', type: 'cursive', translit: 'ТАВ (ПРОПИСНОЙ)' }
+  ];
+
+  shuffledLetters: any[] = [];
+  currentTask: { letter: string; translit: string } | null = null;
+  resultMessage: string = '';
+  timer: number = 0;
+  timerInterval: any = null;
+  gameStarted: boolean = false; // Флаг, указывающий, что игра началась
+
+  ngOnInit() {
+    this.startGame();
+  }
+
+  ngOnDestroy() {
+    if (this.timerInterval) {
+      clearInterval(this.timerInterval); // Очистка таймера при уничтожении компонента
+    }
+  }
+
+  // Перемешивает массив случайным образом
+  shuffleArray(array: any[]) {
+    return array.sort(() => Math.random() - 0.5);
+  }
+
+  // Начало игры: перемешиваем буквы и устанавливаем первое задание
+  startGame() {
+    this.shuffledLetters = this.shuffleArray([...this.letters]);
+    this.setRandomTask();
+    this.resultMessage = ''; // Сбрасываем сообщение
+    this.gameStarted = false; // Игра не началась
+  }
+
+  // Устанавливаем новую букву-задание
+  setRandomTask() {
+    if (this.shuffledLetters.length > 0) {
+      const randomIndex = Math.floor(Math.random() * this.shuffledLetters.length);
+      const taskLetter = this.shuffledLetters[randomIndex];
+      this.currentTask = { letter: taskLetter.letter, translit: taskLetter.translit };
+      this.resultMessage = '';
+    } else {
+      this.currentTask = null;
+      this.resultMessage = 'Игра окончена! Все буквы найдены.';
+      clearInterval(this.timerInterval); // Останавливаем таймер по завершении игры
+    }
+  }
+
+  // Обработка выбора буквы
+  selectLetter(letter: any) {
+    if (!this.gameStarted) {
+      this.startTimer(); // Запускаем таймер, если игра только началась
+    }
+
+    if (letter.letter === this.currentTask?.letter) {
+      // Удаляем букву из списка
+      this.shuffledLetters = this.shuffledLetters.filter(l => l !== letter);
+      this.resultMessage = 'Верно!';
+      this.setRandomTask(); // Устанавливаем следующую букву
+    } else {
+      this.resultMessage = 'Неверно, попробуйте снова.';
+    }
+  }
+
+  // Запуск таймера
+  startTimer() {
+    this.gameStarted = true; // Игра началась
+    this.timer = 0; // Сбрасываем время
+    this.timerInterval = setInterval(() => {
+      this.timer++; // Увеличиваем время каждую секунду
+    }, 1000);
+  }
+
+  // Перезапуск игры
+  restartGame() {
+    this.startGame(); // Перезапускаем игру
+    this.resultMessage = ''; // Сбрасываем сообщение
+    this.timer = 0;
+  }
+
+  formattedTime(): string {
+    const hours = Math.floor(this.timer / 3600);
+    const minutes = Math.floor((this.timer % 3600) / 60);
+    const seconds = this.timer % 60;
+
+    return `${this.pad(hours)}:${this.pad(minutes)}:${this.pad(seconds)}`;
+  }
+
+  pad(value: number): string {
+    return value < 10 ? `0${value}` : `${value}`;
+  }
+}

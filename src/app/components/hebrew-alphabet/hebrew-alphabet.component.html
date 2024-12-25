@@ -1,0 +1,33 @@
+<div class="container">
+  <mat-card class="task-card">
+    <ng-container *ngIf="currentTask; else gameOver">
+      <p>Выберите букву</p>
+      <p><strong>{{ currentTask?.translit }}</strong></p>
+      <p *ngIf="timer!==0"> {{ formattedTime() }} </p>
+    </ng-container>
+  </mat-card>
+
+  <!-- Таблица букв -->
+  <div class="letters-container">
+    <mat-card
+      *ngFor="let letter of shuffledLetters"
+      class="letter-card"
+      [ngClass]="{
+        'letter-printed': letter.type === 'printed',
+        'letter-cursive': letter.type === 'cursive'
+      }"
+      (click)="selectLetter(letter)"
+    >
+      <span>{{ letter.letter }}</span>
+    </mat-card>
+  </div>
+
+  <!-- Конец игры -->
+  <ng-template #gameOver>
+    <div class="game-over">
+      <p>Игра окончена! Все буквы найдены.</p>
+      <p>Время игры: <strong>{{ timer }} секунд</strong></p>
+      <button mat-raised-button color="primary" (click)="restartGame()">Начать заново</button>
+    </div>
+  </ng-template>
+</div>

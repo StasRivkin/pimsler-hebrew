@@ -22,3 +22,20 @@ html, body {
   bottom: env(safe-area-inset-bottom);
   right: env(safe-area-inset-right);
 }
+
+@font-face {
+  font-family: 'CustomFont';
+  src: url('assets/fonts/ComixNo2CLM-Medium.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'CustomFont';
+  src: url('assets/fonts/KtavYadCLM-MediumItalic.otf') format('opentype');
+  font-weight: normal;
+  font-style: italic;
+}
+
+
+
