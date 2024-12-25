@@ -16,8 +16,7 @@
         'letter-printed': letter.type === 'printed',
         'letter-cursive': letter.type === 'cursive'
       }"
-      (click)="selectLetter(letter)"
-    >
+      (click)="selectLetter(letter)">
       <span>{{ letter.letter }}</span>
     </mat-card>
   </div>
@@ -26,7 +25,19 @@
   <ng-template #gameOver>
     <div class="game-over">
       <p>Игра окончена! Все буквы найдены.</p>
-      <p>Время игры: <strong>{{ timer }} секунд</strong></p>
+      <p>Время игры: <strong>{{ formattedTime() }} </strong></p>
+      <div *ngIf="errors.length > 0">
+        <h3>{{ errors.length }} ошибк{{ errors.length > 1 ? "и" : "а" }}:</h3>
+        <ul>
+          <li class="error-item" *ngFor="let error of errors">
+            <span [ngClass]="{
+        'letter-printed': error.type === 'printed',
+        'letter-cursive': error.type === 'cursive'
+      }">{{ error.letter }}</span>
+            <span> ({{ error.translit }})</span>
+          </li>
+        </ul>
+      </div>
       <button mat-raised-button color="primary" (click)="restartGame()">Начать заново</button>
     </div>
   </ng-template>
