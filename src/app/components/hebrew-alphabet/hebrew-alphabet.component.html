@@ -3,7 +3,7 @@
     <mat-card class="task-card">
       <ng-container *ngIf="currentTask; else gameOver">
         <p>Выберите букву</p>
-        <p><strong>{{ currentTask?.translit }}</strong></p>
+        <p><strong>{{ currentTask.translit }}</strong></p>
         <p *ngIf="timer!==0"> {{ formattedTime() }} </p>
       </ng-container>
     </mat-card>

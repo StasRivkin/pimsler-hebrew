@@ -4,7 +4,9 @@
   left: 0;
 
 }
-
+.sidenav-container{
+  background: linear-gradient(45deg, black, transparent);
+}
 .mat-drawer{
   width: 60%;
   background-color: #eae2f7;
