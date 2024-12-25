@@ -9,8 +9,8 @@ export class HebrewAlphabetComponent implements OnInit {
   private letters = [
     {id: 1, letter: 'א', type: 'printed', translit: 'АЛЕФ (ПЕЧАТНЫЙ)'},
     {id: 2, letter: 'א', type: 'cursive', translit: 'АЛЕФ (ПРОПИСНОЙ)'},
-    {id: 3, letter: 'ב', type: 'printed', translit: 'БЕТ (ПЕЧАТНЫЙ)'},
-    {id: 4, letter: 'ב', type: 'cursive', translit: 'БЕТ (ПРОПИСНОЙ)'},
+    {id: 3, letter: 'ב', type: 'printed', translit: 'БЕТ/ВЕТ (ПЕЧАТНЫЙ)'},
+    {id: 4, letter: 'ב', type: 'cursive', translit: 'БЕТ/ВЕТ (ПРОПИСНОЙ)'},
     {id: 5, letter: 'ג', type: 'printed', translit: 'ГИМЕЛЬ (ПЕЧАТНЫЙ)'},
     {id: 6, letter: 'ג', type: 'cursive', translit: 'ГИМЕЛЬ (ПРОПИСНОЙ)'},
     {id: 7, letter: 'ד', type: 'printed', translit: 'ДАЛЕТ (ПЕЧАТНЫЙ)'},
