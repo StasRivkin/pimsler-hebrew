@@ -11,28 +11,36 @@ export class UpdateCheckerComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.updates.isEnabled) {
-      // Проверяем обновления сразу при загрузке
       this.updates.versionUpdates.subscribe(async (event) => {
         console.log('Service Worker Update Event:', event);
         if (event.type === 'VERSION_DETECTED') {
-          // Если обнаружена новая версия, показываем уведомление
           this.promptUserToUpdate();
-        } else {
-          console.log('No updates');
         }
       });
+
+      // Регулярная проверка обновлений
+      setInterval(() => {
+        this.checkForUpdates();
+      }, 1000 * 60 * 5); // Каждые 5 минут
     } else {
       console.log('Service Worker not enabled.');
     }
+  }
+
+  private checkForUpdates() {
+    this.updates.checkForUpdate().then(() => {
+      console.log('Checked for updates');
+    }).catch((error) => {
+      console.error('Error checking for updates:', error);
+    });
   }
 
   private promptUserToUpdate(): void {
     const snackBarRef = this.snackBar.open(
       'Доступна новая версия приложения. Обновить?',
       'Обновить',
-      { duration: undefined } // Уведомление будет висеть до выбора действия
+      { duration: undefined }
     );
-
     snackBarRef.onAction().subscribe(() => {
       this.activateUpdate();
     });
@@ -41,15 +49,13 @@ export class UpdateCheckerComponent implements OnInit {
   private async activateUpdate(): Promise<void> {
     try {
       console.log('Activating update...');
-      await this.clearCache(); // Сбрасываем кеш
+      await this.clearCache();
       console.log('Cache cleared successfully.');
-      await this.updates.activateUpdate(); // Активируем обновление
+      await this.updates.activateUpdate();
       console.log('Update activated.');
-
-      // Убедимся, что обновление было активировано
       if (this.updates.isEnabled) {
         console.log('Reloading page...');
-        document.location.reload(); // Перезагружаем страницу
+        document.location.reload();
       }
     } catch (error) {
       console.error('Error during update activation:', error);
@@ -59,9 +65,9 @@ export class UpdateCheckerComponent implements OnInit {
   private async clearCache(): Promise<void> {
     if ('caches' in window) {
       try {
-        const cacheNames = await caches.keys(); // Получаем все имена кешей
+        const cacheNames = await caches.keys();
         for (const cacheName of cacheNames) {
-          await caches.delete(cacheName); // Удаляем каждый кеш
+          await caches.delete(cacheName);
           console.log(`Cache "${cacheName}" deleted.`);
         }
       } catch (error) {
