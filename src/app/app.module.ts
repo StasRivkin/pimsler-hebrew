@@ -23,11 +23,12 @@ import { TableDataComponent } from './components/table-data/table-data.component
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import { UpdateCheckerComponent } from './components/update-checker/update-checker.component';
 import {MatSidenavModule} from "@angular/material/sidenav";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import { HebrewAlphabetComponent } from './components/hebrew-alphabet/hebrew-alphabet.component';
 import {MatInputModule} from "@angular/material/input";
 import {MatCardModule} from "@angular/material/card";
+import { AuthenticationComponent } from './components/authentication/authentication.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import {MatCardModule} from "@angular/material/card";
     TabBodyComponent,
     TableDataComponent,
     UpdateCheckerComponent,
-    HebrewAlphabetComponent
+    HebrewAlphabetComponent,
+    AuthenticationComponent
   ],
   imports: [
     BrowserModule,
@@ -62,6 +64,8 @@ import {MatCardModule} from "@angular/material/card";
     FormsModule,
     MatCardModule,
     MatInputModule,
+    ReactiveFormsModule,
+    FormsModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
       // Register the ServiceWorker as soon as the application is stable

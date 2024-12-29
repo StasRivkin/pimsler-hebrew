@@ -11,6 +11,7 @@ export class AppComponent implements OnInit {
   title = 'pimsler-hebrew';
   isMenuOpen = false;
   isAutoplay = false;
+  isAuthenticated = true;
 
   constructor(private dataStore: DataStoreService, private actionStore: ActionStoreService) {
   }

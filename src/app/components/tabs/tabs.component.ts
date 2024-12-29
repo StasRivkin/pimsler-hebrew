@@ -12,6 +12,7 @@ export class TabsComponent implements OnInit, AfterViewInit {
   curPart: number = 0;
 
   private touchStartX: number = 0;
+  private touchStartY: number = 0;
   private touchEndX: number = 0;
   private touchStartTime: number = 0;
   private swipeThreshold = 50;
@@ -64,29 +65,42 @@ export class TabsComponent implements OnInit, AfterViewInit {
 
   onTouchStart(event: TouchEvent): void {
     this.touchStartX = event.touches[0].clientX;
+    this.touchStartY = event.touches[0].clientY;
     this.touchStartTime = new Date().getTime();
     this.swipeDirection = '';
   }
 
   onTouchMove(event: TouchEvent): void {
-    this.touchEndX = event.touches[0].clientX;
+    const touch = event.touches[0];
+    const deltaX = Math.abs(touch.clientX - this.touchStartX);
+    const deltaY = Math.abs(touch.clientY - this.touchStartY);
+
+    // Проверяем, что движение по X значительно больше, чем по Y
+    if (deltaY > deltaX) {
+      this.showArrow = false;
+      this.swipeDirection = '';
+      return;
+    }
+
+    this.touchEndX = touch.clientX;
     this.showArrow = true;
+
     if (this.curAudio) {
-      if (this.touchStartX < window.innerWidth / 3 && this.touchEndX > this.touchStartX) {
-        this.swipeDirection = 'back';
-        this.arrowType = 'back';
-      }else{
-        // this.swipeDirection = 'back';
+      if (this.touchEndX > this.touchStartX) {
+        this.swipeDirection = 'back_ios';
+        this.arrowType = 'back_ios';
+      } else {
         this.showArrow = false;
       }
     }
+
     if (this.swipeDirection === '') {
-      this.swipeDirection = event.touches[0].clientX > this.touchStartX ? 'back' : 'forward';
-      this.arrowType = this.swipeDirection === 'back' ? 'back' : 'forward';
+      this.swipeDirection = this.touchEndX > this.touchStartX ? 'back_ios' : 'forward_ios';
+      this.arrowType = this.swipeDirection === 'back_ios' ? 'back_ios' : 'forward_ios';
     }
-    this.arrowPositionX = this.swipeDirection === 'back'
-      ? 1
-      : (window.innerWidth-25);
+
+    this.arrowPositionX =
+      this.swipeDirection === 'back_ios' ? 5 : window.innerWidth - 24;
   }
 
   onTouchEnd(): void {
@@ -95,6 +109,7 @@ export class TabsComponent implements OnInit, AfterViewInit {
     const distanceX = this.touchEndX - this.touchStartX;
     if (Math.abs(distanceX) < this.swipeThreshold || timeDifference < this.timeThreshold || this.touchEndX === 0) {
       this.touchStartX = 0;
+      this.touchStartY = 0;
       this.touchEndX = 0;
       this.touchStartTime = 0;
       this.showArrow = false;
@@ -102,6 +117,7 @@ export class TabsComponent implements OnInit, AfterViewInit {
     }
     if (Math.abs(distanceX) < this.swipeThreshold) {
       this.touchStartX = 0;
+      this.touchStartY = 0;
       this.touchEndX = 0;
       this.touchStartTime = 0;
       this.showArrow = false;
@@ -109,11 +125,11 @@ export class TabsComponent implements OnInit, AfterViewInit {
     }
     if (this.curAudio) {
       const screenWidth = window.innerWidth;
-      if (this.swipeDirection === 'back' && this.touchStartX < screenWidth / 3) {
+      if (this.swipeDirection === 'back_ios' && this.touchStartX < screenWidth / 3) {
         this.dataStore.setCurAudio(null);
         this.showArrow = false;
         return;
-      }else {
+      } else {
         this.showArrow = false;
         return;
       }
@@ -130,6 +146,7 @@ export class TabsComponent implements OnInit, AfterViewInit {
       }
     }
     this.touchStartX = 0;
+    this.touchStartY = 0;
     this.touchEndX = 0;
     this.touchStartTime = 0;
     this.showArrow = false;

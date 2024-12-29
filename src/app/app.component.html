@@ -1,4 +1,26 @@
-<div style="display: block; height: 100vh">
+<div *ngIf="!isAuthenticated" style="display: block; height: 100vh">
+  <app-update-checker></app-update-checker>
+  <app-header style="display: block; height: 7%;"></app-header>
+  <app-authentication style="display: flex; flex-direction: column; align-items: center; height: 94%;width: 100%;justify-content: center"></app-authentication>
+
+  <mat-sidenav-container *ngIf="isMenuOpen" class="sidenav-container" style="height: 94%;width:100vw;z-index: 2">
+    <mat-sidenav-content *ngIf="isMenuOpen" (click)="closeMenu()" (close)="closeMenu()">
+      <div *ngIf="isMenuOpen" style="height: 100vh; width: 100vw; background-color: rgba(0, 0, 0, 0.2);" (click)="closeMenu()">
+      </div>
+    </mat-sidenav-content>
+    <mat-sidenav mode="over" position="end" [opened]="isMenuOpen">
+      <mat-nav-list>
+        <a mat-list-item href="#">
+          <mat-checkbox [(ngModel)]="isAutoplay" (change)="onAutoplayChange($event)">
+            Автопроизведение
+          </mat-checkbox>
+        </a>
+      </mat-nav-list>
+    </mat-sidenav>
+  </mat-sidenav-container>
+</div>
+
+<div *ngIf="isAuthenticated" style="display: block; height: 100vh">
   <app-update-checker></app-update-checker>
   <app-header style="display: block; height: 7%;"></app-header>
   <app-tabs style="display: flex; flex-direction: column; align-items: center; height: 94%;width: 100%;justify-content: center"></app-tabs>
