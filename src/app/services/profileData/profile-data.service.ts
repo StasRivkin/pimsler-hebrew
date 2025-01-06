@@ -16,6 +16,17 @@ export class ProfileDataService {
   ) {
   }
 
+  async pingService() {
+    try {
+      return await lastValueFrom(this.http.get<String>(this.mainUrl + '/pingPong', {
+        responseType: 'text' as 'json'
+      }));
+    } catch (error) {
+      console.error('Failed', error);
+      return 'Ошибка ПингПонг.';
+    }
+  }
+
   async getProfileData(data: { email: string, password: string }) {
     const credentials = btoa(`${data.email}:${data.password}`);
     const headers = new HttpHeaders({
