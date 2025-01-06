@@ -1,6 +1,7 @@
 import {AfterViewInit, Component, OnInit, QueryList, ViewChild} from '@angular/core';
 import {DataStoreService} from "../../store/data-store.service";
 import {MatTabGroup} from "@angular/material/tabs";
+import {ProfileDataService} from "../../services/profileData/profile-data.service";
 
 @Component({
   selector: 'app-tabs',
@@ -26,6 +27,7 @@ export class TabsComponent implements OnInit, AfterViewInit {
 
   constructor(
     private dataStore: DataStoreService,
+    private profileDataService: ProfileDataService,
   ) {
   }
 

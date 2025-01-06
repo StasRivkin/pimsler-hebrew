@@ -1,6 +1,8 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {DataStoreService} from '../../store/data-store.service';
 import {ActionStoreService} from "../../store/action-store.service";
+import {ProfileDataService} from "../../services/profileData/profile-data.service";
+import {IProfile} from "../../inteface/Interfaces";
 
 @Component({
   selector: 'app-tab-body',
@@ -9,6 +11,7 @@ import {ActionStoreService} from "../../store/action-store.service";
 })
 export class TabBodyComponent implements OnInit {
   @ViewChild('audioPlayer', {static: false}) audioPlayer!: ElementRef<HTMLAudioElement>;
+  curPart: number = 0;
   audios: any[] = [];
   curAudio: any;
   currentAudioUrl?: string;
@@ -20,7 +23,14 @@ export class TabBodyComponent implements OnInit {
 
   isAutoplayModeOn = false;
 
-  constructor(private dataStore: DataStoreService, private actionStore: ActionStoreService) {
+  showNotification = false;
+  currentProfile: IProfile | null = null;
+
+  constructor(
+    private dataStore: DataStoreService,
+    private actionStore: ActionStoreService,
+    private profileDataService: ProfileDataService,
+  ) {
   }
 
   ngOnInit(): void {
@@ -43,17 +53,25 @@ export class TabBodyComponent implements OnInit {
       }
     });
     this.dataStore.getCurPart().subscribe(curPart => {
+      this.curPart = curPart;
       this.audios = this.generateAudios(curPart);
       this.currentAudioUrl = undefined;
       this.isMuted = false;
     });
     this.actionStore.getIsAutoplayModeOn().subscribe(flag => this.isAutoplayModeOn = flag);
+    this.dataStore.getProfile().subscribe(data => {
+      this.currentProfile = data;
+      this.audios.forEach(audio => {
+        if (this.currentProfile) {
+          audio.isPassed = this.currentProfile!.activities.passedLessons.includes(this.curPart + "_" + audio.title);
+        }
+      });
+    })
   }
 
   loadAudio(audio: any, url: string): void {
-
-    console.log("clicked");
     this.dataStore.setCurAudio(audio);
+    console.log(audio)
     if (url === this.currentAudioUrl) {
       return;
     }
@@ -91,7 +109,8 @@ export class TabBodyComponent implements OnInit {
     const basePath = `/assets/part${part}/part${part}-lesson-`;
     return Array.from({length: 30}, (_, i) => ({
       title: `Урок ${i + 1}`,
-      url: `${basePath}${i + 1}.mp3`
+      url: `${basePath}${i + 1}.mp3`,
+      isPassed: this.currentProfile?.activities.passedLessons.includes(part + "_" + `Урок ${i + 1}`)
     }));
   }
 
@@ -121,17 +140,46 @@ export class TabBodyComponent implements OnInit {
     player.currentTime = event.target.value;
   }
 
-  onEnded(player: HTMLAudioElement): void {
-    const currentIndex = this.audios.findIndex(audio => audio.url === this.currentAudioUrl);
-    if (currentIndex !== -1 && currentIndex < this.audios.length - 1) {
-      const nextAudio = this.audios[currentIndex + 1];
-      this.loadAudio(null, nextAudio.url);
-      this.isPlaying = true;
-      this.isMuted = false;
-    } else {
-      this.isPlaying = false;
-      this.isMuted = false;
+  async onEnded(player: HTMLAudioElement): Promise<void> {
+    if (player.currentTime === player.duration) {
+      const userDecision = await this.showCustomNotification();
+      if (userDecision === 'yes') {
+        console.log('Урок добавлен в список пройденных');
+        const curPartLesson = this.curPart + "_" + this.curAudio.title;
+        if (this.currentProfile!.activities.passedLessons.indexOf(curPartLesson) < 0) {
+          this.currentProfile!.activities.passedLessons.push(curPartLesson);
+          this.dataStore.setProfile(this.currentProfile);
+        }
+        await this.profileDataService.addPassedLessonIntoProfileData(this.currentProfile?.token!, curPartLesson);
+      } else {
+        console.log('Действие отменено');
+      }
     }
+    this.isPlaying = false;
+    this.isMuted = false;
+    this.audioDuration = 0;
+    this.currentTime = 0;
+    this.dataStore.setCurAudio(null);
+  }
+
+  showCustomNotification(): Promise<string> {
+    this.showNotification = true;
+    return new Promise((resolve) => {
+      this.handleOnYesClick = () => {
+        this.showNotification = false;
+        resolve('yes');
+      };
+      this.handleOnNoClick = () => {
+        this.showNotification = false;
+        resolve('no');
+      };
+    });
+  }
+
+  handleOnYesClick() {
+  }
+
+  handleOnNoClick() {
   }
 
   formatTime(time: number): string {

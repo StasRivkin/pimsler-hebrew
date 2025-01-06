@@ -12,6 +12,17 @@
   background-color: #eae2f7;
 }
 
+:host::ng-deep.mat-drawer-inner-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.bottom-section{
+  margin-bottom: 10px;
+  text-align: center;
+}
+
 .mdc-list {
   padding: 8px 0;
 }
@@ -31,3 +42,18 @@
 :host::ng-deep.mdc-checkbox__checkmark {
   color: white !important; /* Цвет галочки */
 }
+
+:host::ng-deep.mdc-label {
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.87);
+  line-height: 1.5;
+}
+
+:host::ng-deep.mat-mdc-list-item-unscoped-content {
+  font-size: 14px; /* Общий размер текста */
+  font-weight: 400; /* Толщина шрифта */
+  color: rgba(0, 0, 0, 0.87); /* Цвет текста */
+  line-height: 1.5; /* Высота строки */
+}
+

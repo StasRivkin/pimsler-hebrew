@@ -1,10 +1,12 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from "rxjs";
+import {IProfile} from "../inteface/Interfaces";
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataStoreService {
+  private profile: BehaviorSubject<IProfile | null> = new BehaviorSubject<IProfile | null>(this.getProfileFromStorage());
   private curPart: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   private curAudio: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   private loading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
@@ -13,6 +15,25 @@ export class DataStoreService {
 
 
   constructor() {
+  }
+
+  private getProfileFromStorage(): IProfile|null {
+    try {
+      const savedState = localStorage.getItem('profile');
+      return savedState ? JSON.parse(savedState) : false;
+    } catch (error) {
+      console.error('Ошибка при чтении из localStorage', error);
+      return null;
+    }
+  }
+
+  setProfile(data: IProfile | null): void {
+    this.profile.next(data);
+    localStorage.setItem('profile', JSON.stringify(data));
+  }
+
+  getProfile(): Observable<IProfile | null> {
+    return this.profile.asObservable();
   }
 
   setCurPart(data: number): void {
