@@ -8,7 +8,7 @@ import {lastValueFrom} from "rxjs";
   providedIn: 'root'
 })
 export class ProfileDataService {
-  private mainUrl = "https://profilerpimsler-production.up.railway.app/profile"
+  private mainUrl = "http://129.159.133.45:8080/profile"
 
   constructor(
     private http: HttpClient,
