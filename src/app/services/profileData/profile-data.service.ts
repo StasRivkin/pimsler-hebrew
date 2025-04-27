@@ -18,7 +18,7 @@ export class ProfileDataService {
 
   async pingService() {
     try {
-      return await lastValueFrom(this.https.get<String>(this.mainUrl + '/pingPong', {
+      return await lastValueFrom(this.http.get<String>(this.mainUrl + '/pingPong', {
         responseType: 'text' as 'json'
       }));
     } catch (error) {
@@ -33,7 +33,7 @@ export class ProfileDataService {
       Authorization: `Basic ${credentials}`
     });
     try {
-      const response = await lastValueFrom(this.https.post<IProfile>(this.mainUrl + '/login', {}, {headers}));
+      const response = await lastValueFrom(this.http.post<IProfile>(this.mainUrl + '/login', {}, {headers}));
       this.dataStoreService.setProfile(response);
       return "";
     } catch (error) {
@@ -49,7 +49,7 @@ export class ProfileDataService {
     password: string,
   }) {
     try {
-      const response = await lastValueFrom(this.https.post<IProfile>(this.mainUrl + '/registration', data, {}));
+      const response = await lastValueFrom(this.http.post<IProfile>(this.mainUrl + '/registration', data, {}));
       this.dataStoreService.setProfile(response);
       return "";
     } catch (error) {
@@ -61,7 +61,7 @@ export class ProfileDataService {
   async removeProfileData(token: string) {
     const headers = new HttpHeaders({Authorization: `Bearer ${token}`});
     try {
-      await lastValueFrom(this.https.post<IProfile>(this.mainUrl + `/logout`, {}, {headers}));
+      await lastValueFrom(this.http.post<IProfile>(this.mainUrl + `/logout`, {}, {headers}));
       this.dataStoreService.setProfile(null);
     } catch (error) {
       console.error('Registration failed', error);
@@ -71,7 +71,7 @@ export class ProfileDataService {
   async addPassedLessonIntoProfileData(token: string, lessonId: string) {
     const headers = new HttpHeaders({Authorization: `Bearer ${token}`});
     try {
-      await lastValueFrom(this.https.put<IProfile>(this.mainUrl + `/addPassedLesson/${lessonId}`, {}, {headers}));
+      await lastValueFrom(this.http.put<IProfile>(this.mainUrl + `/addPassedLesson/${lessonId}`, {}, {headers}));
       return "";
     } catch (error) {
       console.error('Registration failed', error);
