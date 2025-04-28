@@ -1,0 +1,6 @@
+[[redirects]]
+  from = "/profile/*"
+  to = "https://129.159.133.45:443/profile/:splat"
+  status = 200
+  force = true
+  headers = { "X-Forwarded-Proto" = "https" }
