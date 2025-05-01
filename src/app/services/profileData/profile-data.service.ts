@@ -8,7 +8,7 @@ import {lastValueFrom} from "rxjs";
   providedIn: 'root'
 })
 export class ProfileDataService {
-  private mainUrl = "https://129.159.133.45/profile"
+  private mainUrl = "https://learn-hebrew.duckdns.org:4431/profile"
 
   constructor(
     private http: HttpClient,
