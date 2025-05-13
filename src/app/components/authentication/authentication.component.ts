@@ -101,4 +101,8 @@ export class AuthenticationComponent implements OnInit {
       console.log('Register:', {email, firstName, lastName, password});
     }
   }
+
+  async handleForgotPassword() {
+    await this.profileDataService.resetPassword(this.authForm.get('email')?.value);
+  }
 }

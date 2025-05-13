@@ -82,7 +82,8 @@ export class ProfileDataService {
       await lastValueFrom(this.http.post<IProfile>(this.mainUrl + `/logout`, {}, {headers}));
       this.dataStoreService.setProfile(null);
     } catch (error) {
-      console.error('Registration failed', error);
+      this.dataStoreService.setProfile(null);
+      console.error('removeProfileData failed', error);
     }
   }
 
@@ -93,6 +94,21 @@ export class ProfileDataService {
       return "";
     } catch (error) {
       console.error('Registration failed', error);
+      return 'Произошла ошибка. Попробуйте еще раз.';
+    }
+  }
+
+  async resetPassword(email: string) {
+    const headers = new HttpHeaders(
+      {
+        "X-application": "PIMSLER"
+      },
+    );
+    try {
+      await lastValueFrom(this.http.put<IProfile>(this.mainUrl + `/resetPassword/${email}`, {}, {headers}));
+      return "";
+    } catch (error) {
+      console.error('resetPassword failed', error);
       return 'Произошла ошибка. Попробуйте еще раз.';
     }
   }

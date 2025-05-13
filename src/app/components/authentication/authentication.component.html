@@ -48,6 +48,9 @@
     <button type="submit" [disabled]="authForm.invalid">
       {{ isLoginMode ? 'Авторизация' : 'Регистрация' }}
     </button>
+    <button *ngIf="isLoginMode" type="reset" (click)="handleForgotPassword()">
+      Забыл пароль
+    </button>
     <button type="button" class="switch-mode" (click)="switchMode()">
       Переход к {{ isLoginMode ? 'Регистрации' : 'Авторизации' }}
     </button>
