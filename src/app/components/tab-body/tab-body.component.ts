@@ -2,7 +2,7 @@ import {Component, ElementRef, OnInit, TemplateRef, ViewChild} from '@angular/co
 import {DataStoreService} from '../../store/data-store.service';
 import {ActionStoreService} from "../../store/action-store.service";
 import {ProfileDataService} from "../../services/profileData/profile-data.service";
-import {IProfile} from "../../inteface/Interfaces";
+import {IActivities, IProfile} from "../../inteface/Interfaces";
 
 @Component({
   selector: 'app-tab-body',
@@ -60,12 +60,15 @@ export class TabBodyComponent implements OnInit {
     });
     this.actionStore.getIsAutoplayModeOn().subscribe(flag => this.isAutoplayModeOn = flag);
     this.dataStore.getProfile().subscribe(data => {
+
+
       this.currentProfile = data;
       this.audios.forEach(audio => {
         if (this.currentProfile) {
-          audio.isPassed = this.currentProfile!.activities.passedLessons.includes(this.curPart + "_" + audio.title);
+          audio.isPassed = this.currentProfile!.applicationData.passedLessons?.includes(this.curPart + "_" + audio.title);
         }
       });
+      console.log(data)
     })
   }
 
@@ -110,7 +113,7 @@ export class TabBodyComponent implements OnInit {
     return Array.from({length: 30}, (_, i) => ({
       title: `Урок ${i + 1}`,
       url: `${basePath}${i + 1}.mp3`,
-      isPassed: this.currentProfile?.activities.passedLessons.includes(part + "_" + `Урок ${i + 1}`)
+      isPassed: this.currentProfile?.applicationData.passedLessons?.includes(part + "_" + `Урок ${i + 1}`)
     }));
   }
 
@@ -146,11 +149,20 @@ export class TabBodyComponent implements OnInit {
       if (userDecision === 'yes') {
         console.log('Урок добавлен в список пройденных');
         const curPartLesson = this.curPart + "_" + this.curAudio.title;
-        if (this.currentProfile!.activities.passedLessons.indexOf(curPartLesson) < 0) {
-          this.currentProfile!.activities.passedLessons.push(curPartLesson);
+        if (this.currentProfile!.applicationData.passedLessons.indexOf(curPartLesson) < 0) {
+          this.currentProfile!.applicationData.passedLessons.push(curPartLesson);
           this.dataStore.setProfile(this.currentProfile);
         }
-        await this.profileDataService.addPassedLessonIntoProfileData(this.currentProfile?.token!, curPartLesson);
+        console.log(this.currentProfile!.applicationData.passedLessons)
+        const data: IActivities = {
+          passedLessons:this.currentProfile!.applicationData.passedLessons || [],
+          lastListenedLesson: {
+            key: curPartLesson,
+            value: this.currentTime
+          }
+        }
+        console.log(data)
+        await this.profileDataService.addPassedLessonIntoProfileData(this.currentProfile?.token!,  data);
       } else {
         console.log('Действие отменено');
       }

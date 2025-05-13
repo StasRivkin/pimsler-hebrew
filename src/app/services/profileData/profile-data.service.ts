@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {IProfile} from "../../inteface/Interfaces";
+import {IActivities, IProfile} from "../../inteface/Interfaces";
 import {DataStoreService} from "../../store/data-store.service";
 import {lastValueFrom} from "rxjs";
 
@@ -8,7 +8,8 @@ import {lastValueFrom} from "rxjs";
   providedIn: 'root'
 })
 export class ProfileDataService {
-  private mainUrl = "https://learn-hebrew.duckdns.org:4431/profile"
+  private APP = "PIMSLER"
+  private mainUrl = "https://rls-auth-service.duckdns.org/authorization"
 
   constructor(
     private http: HttpClient,
@@ -28,12 +29,14 @@ export class ProfileDataService {
   }
 
   async getProfileData(data: { email: string, password: string }) {
-    const credentials = btoa(`${data.email}:${data.password}`);
+    const credentials = btoa(`${data.email}||${this.APP}:${data.password}`);
     const headers = new HttpHeaders({
-      Authorization: `Basic ${credentials}`
+      Authorization: `Basic ${credentials}`,
+      "X-application": this.APP
     });
     try {
       const response = await lastValueFrom(this.http.post<IProfile>(this.mainUrl + '/login', {}, {headers}));
+      console.log(response)
       this.dataStoreService.setProfile(response);
       return "";
     } catch (error) {
@@ -47,9 +50,19 @@ export class ProfileDataService {
     firstName: string,
     lastName: string,
     password: string,
+    application: string
   }) {
+    data.application = this.APP;
     try {
       const response = await lastValueFrom(this.http.post<IProfile>(this.mainUrl + '/registration', data, {}));
+      response.applicationData = {
+        passedLessons: [],
+        lastListenedLesson: {
+          key: '',
+          value: 0
+        }
+      };
+      console.log(response)
       this.dataStoreService.setProfile(response);
       return "";
     } catch (error) {
@@ -59,7 +72,12 @@ export class ProfileDataService {
   }
 
   async removeProfileData(token: string) {
-    const headers = new HttpHeaders({Authorization: `Bearer ${token}`});
+    const headers = new HttpHeaders(
+      {
+        Authorization: `Bearer ${token}`,
+        "X-application": "PIMSLER"
+      },
+    );
     try {
       await lastValueFrom(this.http.post<IProfile>(this.mainUrl + `/logout`, {}, {headers}));
       this.dataStoreService.setProfile(null);
@@ -68,10 +86,10 @@ export class ProfileDataService {
     }
   }
 
-  async addPassedLessonIntoProfileData(token: string, lessonId: string) {
+  async addPassedLessonIntoProfileData(token: string, applicationData: IActivities) {
     const headers = new HttpHeaders({Authorization: `Bearer ${token}`});
     try {
-      await lastValueFrom(this.http.put<IProfile>(this.mainUrl + `/addPassedLesson/${lessonId}`, {}, {headers}));
+      await lastValueFrom(this.http.put<IProfile>(this.mainUrl + `/processApplicationData`, {applicationData}, {headers}));
       return "";
     } catch (error) {
       console.error('Registration failed', error);

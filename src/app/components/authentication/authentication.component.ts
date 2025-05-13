@@ -91,7 +91,13 @@ export class AuthenticationComponent implements OnInit {
         this.errorMessage = 'Пароли не совпадают!';
         return;
       }
-      this.errorMessage = await this.profileDataService.setProfileData({email, firstName, lastName, password});
+      this.errorMessage = await this.profileDataService.setProfileData({
+        email,
+        firstName,
+        lastName,
+        password,
+        application: ""
+      });
       console.log('Register:', {email, firstName, lastName, password});
     }
   }
