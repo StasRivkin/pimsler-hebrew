@@ -10,6 +10,7 @@ import {lastValueFrom} from "rxjs";
 export class ProfileDataService {
   private APP = "PIMSLER"
   private mainUrl = "https://rls-auth-service.duckdns.org/authorization"
+
   // private mainUrl = "http://localhost/authorization"
 
   constructor(
@@ -117,6 +118,23 @@ export class ProfileDataService {
     } catch (error) {
       console.error('resetPassword failed', error);
       return 'Произошла ошибка. Попробуйте еще раз.';
+    }
+  }
+
+  async changePassword(newPassword: string, token: string) {
+    const headers = new HttpHeaders(
+      {
+        Authorization: `Bearer ${token}`,
+        "X-application":this.APP,
+        "X-Password": newPassword
+      },
+    );
+    try {
+      await lastValueFrom(this.http.put<IProfile>(this.mainUrl + `/editpassword`, {}, {headers}));
+      return "";
+    } catch (error: any) {
+      console.error('resetPassword failed', error);
+      return 'Произошла ошибка: ' + error.message;
     }
   }
 }

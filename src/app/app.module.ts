@@ -30,6 +30,8 @@ import {MatInputModule} from "@angular/material/input";
 import {MatCardModule} from "@angular/material/card";
 import {AuthenticationComponent} from './components/authentication/authentication.component';
 import {HttpClientModule} from "@angular/common/http";
+import {MatDialogModule} from "@angular/material/dialog";
+import { ChangePasswordModalComponent } from './components/change-password-modal/change-password-modal.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +43,7 @@ import {HttpClientModule} from "@angular/common/http";
     UpdateCheckerComponent,
     HebrewAlphabetComponent,
     AuthenticationComponent,
+    ChangePasswordModalComponent,
 
   ],
   imports: [
@@ -69,6 +72,7 @@ import {HttpClientModule} from "@angular/common/http";
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
+    MatDialogModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
       // Register the ServiceWorker as soon as the application is stable

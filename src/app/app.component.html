@@ -28,12 +28,17 @@
       </mat-nav-list>
       <div class="bottom-section">
         <hr/>
+        <a mat-list-item href="#" (click)="handlePasswordChange()">
+          Смена пароля
+        </a>
         <a mat-list-item href="#" (click)="handleLogOut()">
           Выход
         </a>
       </div>
     </mat-sidenav>
   </mat-sidenav-container>
+
+  <app-change-password-modal *ngIf="isChangePasswordModalOpen"></app-change-password-modal>
 </div>
 
 

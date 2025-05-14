@@ -7,6 +7,7 @@ import {BehaviorSubject, Observable} from "rxjs";
 export class ActionStoreService {
   private isAutoplayModeOn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.getAutoplayModeFromStorage());
   private isBurgerMenuOpen: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private isChangePasswordModalOpen: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor() {
   }
@@ -36,5 +37,13 @@ export class ActionStoreService {
 
   getIsBurgerMenuOpen(): Observable<boolean> {
     return this.isBurgerMenuOpen.asObservable();
+  }
+
+  setIsChangePasswordModalOpen(status: boolean): void {
+    this.isChangePasswordModalOpen.next(status);
+  }
+
+  getIsChangePasswordModalOpen(): Observable<boolean> {
+    return this.isChangePasswordModalOpen.asObservable();
   }
 }

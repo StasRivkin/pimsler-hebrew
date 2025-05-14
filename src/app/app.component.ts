@@ -16,12 +16,18 @@ export class AppComponent implements OnInit {
   isAuthenticated = false;
   currentProfile: IProfile | null = null;
   statusServer: string = "";
+  isChangePasswordModalOpen = false;
+
   // private pollingInterval = 3000;
 
-  constructor(private dataStore: DataStoreService, private actionStore: ActionStoreService, private profileDataService: ProfileDataService,) {
+  constructor(
+    private dataStore: DataStoreService,
+    private actionStore: ActionStoreService,
+    private profileDataService: ProfileDataService,
+  ) {
   }
 
-  async ngOnInit(): Promise<void> {
+  async ngOnInit() {
     // await this.startDynamicPolling();
     this.actionStore.getIsBurgerMenuOpen().subscribe(flag => this.isMenuOpen = flag);
     this.actionStore.getIsAutoplayModeOn().subscribe(flag => this.isAutoplay = flag);
@@ -29,6 +35,7 @@ export class AppComponent implements OnInit {
       this.isAuthenticated = !!data;
       this.currentProfile = data;
     })
+    this.actionStore.getIsChangePasswordModalOpen().subscribe(flag => this.isChangePasswordModalOpen = flag)
   }
 
   // private startDynamicPolling(): void {
@@ -68,5 +75,10 @@ export class AppComponent implements OnInit {
   async handleLogOut(): Promise<void> {
     await this.profileDataService.removeProfileData(this.currentProfile?.token!);
     this.closeMenu();
+  }
+
+  handlePasswordChange() {
+    this.actionStore.setIsBurgerMenuOpen(false);
+    this.actionStore.setIsChangePasswordModalOpen(true);
   }
 }

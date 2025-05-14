@@ -3,7 +3,7 @@
   <form [formGroup]="authForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
       <label for="email">Логин (Email)</label>
-      <input id="email" formControlName="email" type="email" />
+      <input id="email" formControlName="email" type="email"/>
       <small *ngIf="authForm.get('email')?.invalid && authForm.get('email')?.touched">
         Пожалуйста введите верный email.
       </small>
@@ -13,7 +13,7 @@
 
       <div *ngIf="!isLoginMode" class="form-group">
         <label for="firstName">Имя</label>
-        <input id="firstName" formControlName="firstName" type="text" />
+        <input id="firstName" formControlName="firstName" type="text"/>
         <small *ngIf="authForm.get('firstName')?.invalid && authForm.get('firstName')?.touched">
           Поле "Имя" обязательно для заполнения.
         </small>
@@ -21,16 +21,17 @@
 
       <div *ngIf="!isLoginMode" class="form-group">
         <label for="lastName">Фамилия</label>
-        <input id="lastName" formControlName="lastName" type="text" />
+        <input id="lastName" formControlName="lastName" type="text"/>
         <small *ngIf="authForm.get('lastName')?.invalid && authForm.get('lastName')?.touched">
           Поле "Фамилия" обязательно для заполнения.
         </small>
       </div>
 
       <label for="password">Пароль</label>
-      <input id="password" formControlName="password" type="password" />
+      <input id="password" formControlName="password" type="password"/>
       <small *ngIf="authForm.get('password')?.invalid && authForm.get('password')?.touched">
-        Пароль должен содержать как минимум {{ authForm.get('password')?.errors?.['minlength'].requiredLength }} символов.
+        Пароль должен содержать как минимум {{ authForm.get('password')?.errors?.['minlength'].requiredLength }}
+        символов.
       </small>
       <small *ngIf="errorMessage">
         {{ errorMessage }}
@@ -39,7 +40,7 @@
 
     <div *ngIf="!isLoginMode" class="form-group">
       <label for="confirmPassword">Подтверждение пароля</label>
-      <input id="confirmPassword" formControlName="confirmPassword" type="password" />
+      <input id="confirmPassword" formControlName="confirmPassword" type="password"/>
       <small *ngIf="authForm.get('confirmPassword')?.invalid && authForm.get('confirmPassword')?.touched">
         Поле "Пароль" обязательно для заполнения.
       </small>
@@ -54,5 +55,22 @@
     <button type="button" class="switch-mode" (click)="switchMode()">
       Переход к {{ isLoginMode ? 'Регистрации' : 'Авторизации' }}
     </button>
+
+    <div  class="google-auth-buttons">
+      <button disabled type="button"
+              *ngIf="!isLoginMode"
+              (click)="redirectToGoogle('register')"
+              class="google-btn">
+        Регистрация через Google
+      </button>
+
+      <button disabled type="button"
+              *ngIf="isLoginMode"
+              (click)="redirectToGoogle('login')"
+              class="google-btn">
+        Вход через Google
+      </button>
+    </div>
+
   </form>
 </div>
