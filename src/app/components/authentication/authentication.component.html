@@ -57,14 +57,14 @@
     </button>
 
     <div  class="google-auth-buttons">
-      <button disabled type="button"
+      <button type="button"
               *ngIf="!isLoginMode"
               (click)="redirectToGoogle('register')"
               class="google-btn">
         Регистрация через Google
       </button>
 
-      <button disabled type="button"
+      <button type="button"
               *ngIf="isLoginMode"
               (click)="redirectToGoogle('login')"
               class="google-btn">

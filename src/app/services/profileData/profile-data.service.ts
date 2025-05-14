@@ -11,7 +11,7 @@ export class ProfileDataService {
   private APP = "PIMSLER"
   private mainUrl = "https://rls-auth-service.duckdns.org/authorization"
 
-  // private mainUrl = "http://localhost/authorization"
+  // mainUrl = "https://localhost/authorization"
 
   constructor(
     private http: HttpClient,
@@ -135,6 +135,21 @@ export class ProfileDataService {
     } catch (error: any) {
       console.error('resetPassword failed', error);
       return 'Произошла ошибка: ' + error.message;
+    }
+  }
+
+  async getProfile(token:string) {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+      "X-application": this.APP
+    });
+    try {
+      const response = await lastValueFrom(this.http.get<IProfile>(this.mainUrl + '/getProfile', {headers}));
+      this.dataStoreService.setProfile(response);
+      return "";
+    } catch (error) {
+      console.error('Login failed', error);
+      return 'Неверный email или пароль. Попробуйте еще раз.';
     }
   }
 }

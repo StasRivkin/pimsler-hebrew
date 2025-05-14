@@ -3,6 +3,7 @@ import {DataStoreService} from "./store/data-store.service";
 import {ActionStoreService} from "./store/action-store.service";
 import {ProfileDataService} from "./services/profileData/profile-data.service";
 import {IProfile} from "./inteface/Interfaces";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -24,10 +25,20 @@ export class AppComponent implements OnInit {
     private dataStore: DataStoreService,
     private actionStore: ActionStoreService,
     private profileDataService: ProfileDataService,
+    private route: ActivatedRoute,
+    private router: Router,
   ) {
   }
 
   async ngOnInit() {
+    this.route.queryParams.subscribe(async (params) => {
+      const token = params['token'];
+      if (token) {
+        // console.log(token)
+        await this.profileDataService.getProfile(token)
+      }
+    });
+
     // await this.startDynamicPolling();
     this.actionStore.getIsBurgerMenuOpen().subscribe(flag => this.isMenuOpen = flag);
     this.actionStore.getIsAutoplayModeOn().subscribe(flag => this.isAutoplay = flag);
