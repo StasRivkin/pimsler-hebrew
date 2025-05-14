@@ -20,7 +20,7 @@ export class DataStoreService {
   private getProfileFromStorage(): IProfile|null {
     try {
       const savedState = localStorage.getItem('profile');
-      return savedState ? JSON.parse(savedState) : false;
+      return savedState ? JSON.parse(savedState) : null;
     } catch (error) {
       console.error('Ошибка при чтении из localStorage', error);
       return null;

@@ -10,6 +10,7 @@ import {lastValueFrom} from "rxjs";
 export class ProfileDataService {
   private APP = "PIMSLER"
   private mainUrl = "https://rls-auth-service.duckdns.org/authorization"
+  // private mainUrl = "http://localhost/authorization"
 
   constructor(
     private http: HttpClient,
@@ -36,7 +37,6 @@ export class ProfileDataService {
     });
     try {
       const response = await lastValueFrom(this.http.post<IProfile>(this.mainUrl + '/login', {}, {headers}));
-      console.log(response)
       this.dataStoreService.setProfile(response);
       return "";
     } catch (error) {
@@ -62,7 +62,6 @@ export class ProfileDataService {
           value: 0
         }
       };
-      console.log(response)
       this.dataStoreService.setProfile(response);
       return "";
     } catch (error) {
@@ -88,9 +87,17 @@ export class ProfileDataService {
   }
 
   async addPassedLessonIntoProfileData(token: string, applicationData: IActivities) {
+    const obj = {
+      passedLessons: applicationData.passedLessons,
+      lastListenedLesson: {
+        key: applicationData.lastListenedLesson.key,
+        value: applicationData.lastListenedLesson.value
+      }
+    }
     const headers = new HttpHeaders({Authorization: `Bearer ${token}`});
     try {
-      await lastValueFrom(this.http.put<IProfile>(this.mainUrl + `/processApplicationData`, {applicationData}, {headers}));
+      // this.dataStoreService.setProfile(await lastValueFrom(this.http.put<IProfile>(this.mainUrl + `/processApplicationData`, obj, {headers})));
+      await lastValueFrom(this.http.put<IProfile>(this.mainUrl + `/processApplicationData`, obj, {headers}))
       return "";
     } catch (error) {
       console.error('Registration failed', error);

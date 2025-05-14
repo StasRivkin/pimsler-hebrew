@@ -79,6 +79,12 @@
               "buildTarget": "pimsler-hebrew:build:development"
             }
           },
+          "options": {
+            "ssl": true,
+            "sslKey": "src/cert/privkey.pem",
+            "sslCert": "src/cert/fullchain.pem"
+          },
+
           "defaultConfiguration": "development"
         },
         "extract-i18n": {
