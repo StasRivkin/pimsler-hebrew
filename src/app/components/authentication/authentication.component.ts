@@ -108,7 +108,7 @@ export class AuthenticationComponent implements OnInit {
 
   redirectToGoogle(mode: 'login' | 'register') {
     const clientId = '641189238289-3ggoqkp39phj60dm34d0ooo86cn8u91h.apps.googleusercontent.com';
-    const redirectBase = 'https://rls-auth-service.duckdns.org/authorization/google';
+    const redirectBase = 'https://localhost/authorization/google';
     const scope = 'email%20profile';
     const responseType = 'code';
     const redirectUri = `${redirectBase}/${mode === 'login' ? 'login' : 'registration'}/callback/pimsler`;

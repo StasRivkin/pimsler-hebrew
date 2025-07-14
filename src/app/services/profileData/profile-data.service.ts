@@ -75,7 +75,7 @@ export class ProfileDataService {
     const headers = new HttpHeaders(
       {
         Authorization: `Bearer ${token}`,
-        "X-application": "PIMSLER"
+        "X-application": this.APP
       },
     );
     try {
@@ -109,7 +109,7 @@ export class ProfileDataService {
   async resetPassword(email: string) {
     const headers = new HttpHeaders(
       {
-        "X-application": "PIMSLER"
+        "X-application": this.APP
       },
     );
     try {
@@ -125,7 +125,7 @@ export class ProfileDataService {
     const headers = new HttpHeaders(
       {
         Authorization: `Bearer ${token}`,
-        "X-application":this.APP,
+        "X-application": this.APP,
         "X-Password": newPassword
       },
     );
@@ -138,7 +138,7 @@ export class ProfileDataService {
     }
   }
 
-  async getProfile(token:string) {
+  async getProfile(token: string) {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
       "X-application": this.APP

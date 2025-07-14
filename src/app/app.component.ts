@@ -34,12 +34,10 @@ export class AppComponent implements OnInit {
     this.route.queryParams.subscribe(async (params) => {
       const token = params['token'];
       if (token) {
-        // console.log(token)
-        await this.profileDataService.getProfile(token)
+        await this.profileDataService.getProfile(token);
+        this.actionStore.setIsChangePasswordModalOpen(true);
       }
     });
-
-    // await this.startDynamicPolling();
     this.actionStore.getIsBurgerMenuOpen().subscribe(flag => this.isMenuOpen = flag);
     this.actionStore.getIsAutoplayModeOn().subscribe(flag => this.isAutoplay = flag);
     this.dataStore.getProfile().subscribe(data => {
@@ -48,28 +46,6 @@ export class AppComponent implements OnInit {
     })
     this.actionStore.getIsChangePasswordModalOpen().subscribe(flag => this.isChangePasswordModalOpen = flag)
   }
-
-  // private startDynamicPolling(): void {
-  //   const poll = async () => {
-  //     try {
-  //       const response = await this.profileDataService.pingService();
-  //       if (response === 'PONG') {
-  //         console.log('Server is responding');
-  //         this.statusServer = '';
-  //         this.pollingInterval = 40000;
-  //       }
-  //     } catch (error) {
-  //       this.statusServer = 'Server is not responding';
-  //       console.log('Server is not responding');
-  //     }
-  //
-  //     // Рекурсивный вызов с задержкой
-  //     setTimeout(poll, this.pollingInterval);
-  //   };
-  //
-  //   // Запускаем первый запрос
-  //   poll();
-  // }
 
   onAutoplayChange(event: any): void {
     if (event.checked) {
