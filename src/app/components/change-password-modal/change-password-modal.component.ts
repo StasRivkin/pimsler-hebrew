@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActionStoreService} from "../../store/action-store.service";
 import {ProfileDataService} from "../../services/profileData/profile-data.service";
 import {DataStoreService} from "../../store/data-store.service";
+import {firstValueFrom} from "rxjs";
 
 @Component({
   selector: 'app-change-password-modal',
@@ -38,7 +39,9 @@ export class ChangePasswordModalComponent implements OnInit {
       try {
         const error = await this.profileDataService.changePassword(this.newPassword, this.token);
         if (error === "") {
-          this.actionStore.setIsChangePasswordModalOpen(false)
+          const profile = await firstValueFrom(this.dataStore.getProfile());
+          this.dataStore.setProfile({...profile!, passwordRequired: false})
+          this.actionStore.setIsChangePasswordModalOpen(false);
         } else {
           this.errorMessage = error;
         }
