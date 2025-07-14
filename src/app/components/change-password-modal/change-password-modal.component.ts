@@ -13,6 +13,7 @@ export class ChangePasswordModalComponent implements OnInit {
   newPassword: string = '';
   confirmPassword: string = '';
   errorMessage: string = '';
+  passwordRequired: boolean = false;
 
   constructor(
     private actionStore: ActionStoreService,
@@ -22,7 +23,10 @@ export class ChangePasswordModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.dataStore.getProfile().subscribe(data => this.token = data!.token)
+    this.dataStore.getProfile().subscribe(data => {
+      this.passwordRequired = data!.passwordRequired;
+      this.token = data!.token;
+    })
   }
 
   async onSave() {

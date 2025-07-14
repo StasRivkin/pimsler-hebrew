@@ -35,7 +35,6 @@ export class AppComponent implements OnInit {
       const token = params['token'];
       if (token) {
         await this.profileDataService.getProfile(token);
-        this.actionStore.setIsChangePasswordModalOpen(true);
       }
     });
     this.actionStore.getIsBurgerMenuOpen().subscribe(flag => this.isMenuOpen = flag);
@@ -43,6 +42,9 @@ export class AppComponent implements OnInit {
     this.dataStore.getProfile().subscribe(data => {
       this.isAuthenticated = !!data;
       this.currentProfile = data;
+      if(data?.passwordRequired){
+        this.actionStore.setIsChangePasswordModalOpen(true);
+      }
     })
     this.actionStore.getIsChangePasswordModalOpen().subscribe(flag => this.isChangePasswordModalOpen = flag)
   }

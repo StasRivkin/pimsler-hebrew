@@ -3,6 +3,7 @@ export interface IProfile {
   lastName: string;
   email: string;
   applicationData: IActivities;
+  passwordRequired: boolean;
   token: string;
 }
 export interface IActivities{
