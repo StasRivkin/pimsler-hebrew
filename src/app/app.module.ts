@@ -32,6 +32,7 @@ import {AuthenticationComponent} from './components/authentication/authenticatio
 import {HttpClientModule} from "@angular/common/http";
 import {MatDialogModule} from "@angular/material/dialog";
 import { ChangePasswordModalComponent } from './components/change-password-modal/change-password-modal.component';
+import { UserSettingsComponent } from './components/user-settings/user-settings.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { ChangePasswordModalComponent } from './components/change-password-modal
     HebrewAlphabetComponent,
     AuthenticationComponent,
     ChangePasswordModalComponent,
+    UserSettingsComponent,
 
   ],
   imports: [

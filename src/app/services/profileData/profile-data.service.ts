@@ -97,7 +97,6 @@ export class ProfileDataService {
     }
     const headers = new HttpHeaders({Authorization: `Bearer ${token}`});
     try {
-      // this.dataStoreService.setProfile(await lastValueFrom(this.http.put<IProfile>(this.mainUrl + `/processApplicationData`, obj, {headers})));
       await lastValueFrom(this.http.put<IProfile>(this.mainUrl + `/processApplicationData`, obj, {headers}))
       return "";
     } catch (error) {

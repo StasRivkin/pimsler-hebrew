@@ -18,6 +18,7 @@ export class AppComponent implements OnInit {
   currentProfile: IProfile | null = null;
   statusServer: string = "";
   isChangePasswordModalOpen = false;
+  isUserSettingOpen = false;
 
   // private pollingInterval = 3000;
 
@@ -26,7 +27,6 @@ export class AppComponent implements OnInit {
     private actionStore: ActionStoreService,
     private profileDataService: ProfileDataService,
     private route: ActivatedRoute,
-    private router: Router,
   ) {
   }
 
@@ -42,11 +42,12 @@ export class AppComponent implements OnInit {
     this.dataStore.getProfile().subscribe(data => {
       this.isAuthenticated = !!data;
       this.currentProfile = data;
-      if(data?.passwordRequired){
+      if (data?.passwordRequired) {
         this.actionStore.setIsChangePasswordModalOpen(true);
       }
     })
-    this.actionStore.getIsChangePasswordModalOpen().subscribe(flag => this.isChangePasswordModalOpen = flag)
+    this.actionStore.getIsChangePasswordModalOpen().subscribe(flag => this.isChangePasswordModalOpen = flag);
+    this.actionStore.getIsUserSettingOpen().subscribe(flag => this.isUserSettingOpen = flag);
   }
 
   onAutoplayChange(event: any): void {
@@ -69,5 +70,10 @@ export class AppComponent implements OnInit {
   handlePasswordChange() {
     this.actionStore.setIsBurgerMenuOpen(false);
     this.actionStore.setIsChangePasswordModalOpen(true);
+  }
+
+  handleSettings(){
+    this.actionStore.setIsBurgerMenuOpen(false);
+    this.actionStore.setIsUserSettingOpen(true);
   }
 }

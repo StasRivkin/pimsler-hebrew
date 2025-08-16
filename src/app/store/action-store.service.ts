@@ -8,6 +8,7 @@ export class ActionStoreService {
   private isAutoplayModeOn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.getAutoplayModeFromStorage());
   private isBurgerMenuOpen: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private isChangePasswordModalOpen: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private isUserSettingOpen: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor() {
   }
@@ -45,5 +46,13 @@ export class ActionStoreService {
 
   getIsChangePasswordModalOpen(): Observable<boolean> {
     return this.isChangePasswordModalOpen.asObservable();
+  }
+
+  setIsUserSettingOpen(status: boolean): void {
+    this.isUserSettingOpen.next(status);
+  }
+
+  getIsUserSettingOpen(): Observable<boolean> {
+    return this.isUserSettingOpen.asObservable();
   }
 }

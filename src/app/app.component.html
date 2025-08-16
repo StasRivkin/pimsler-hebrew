@@ -9,8 +9,11 @@
 <div *ngIf="isAuthenticated" style="display: block; height: 100vh">
   <app-update-checker></app-update-checker>
   <app-header style="display: block; height: 7%;"></app-header>
-  <app-tabs
+
+  <app-tabs *ngIf="!isUserSettingOpen"
     style="display: flex; flex-direction: column; align-items: center; height: 94%;width: 100%;justify-content: center"></app-tabs>
+
+
   <mat-sidenav-container *ngIf="isMenuOpen" class="sidenav-container" style="height: 94%;width:100vw;z-index: 2">
     <mat-sidenav-content *ngIf="isMenuOpen" (click)="closeMenu()" (close)="closeMenu()">
       <div *ngIf="isMenuOpen" style="height: 100vh; width: 100vw; background-color: rgba(0, 0, 0, 0.2);"
@@ -28,6 +31,9 @@
       </mat-nav-list>
       <div class="bottom-section">
         <hr/>
+        <a mat-list-item href="#" (click)="handleSettings()">
+          Настройки
+        </a>
         <a mat-list-item href="#" (click)="handlePasswordChange()">
           Смена пароля
         </a>
@@ -37,6 +43,8 @@
       </div>
     </mat-sidenav>
   </mat-sidenav-container>
+
+  <app-user-settings *ngIf="isUserSettingOpen"></app-user-settings>
 
   <app-change-password-modal *ngIf="isChangePasswordModalOpen"></app-change-password-modal>
 </div>
